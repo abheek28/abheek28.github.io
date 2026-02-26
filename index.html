@@ -4,192 +4,710 @@
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Abheek Choudhury</title>
-  <link rel="stylesheet" href="style.css"/>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=SF+Pro+Display:wght@200;300;400&family=Sora:wght@200;300;400;500&display=swap" rel="stylesheet">
-  <!-- Sora is the clean, modern, consistent font we use throughout -->
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@200;300;400;500&display=swap" rel="stylesheet">
+  <style>
+
+    /* ── TOKENS ─────────────────────────────── */
+    :root {
+      --bg:       #000000;
+      --surface:  #141414;
+      --border:   rgba(255,255,255,0.09);
+      --border-h: rgba(255,255,255,0.18);
+      --text:     #f5f5f7;
+      --muted:    rgba(245,245,247,0.50);
+      --dim:      rgba(245,245,247,0.22);
+      --accent:   #2997ff;
+      --nav-h:    48px;
+      --ease:     cubic-bezier(0.25,0.46,0.45,0.94);
+    }
+    [data-theme="light"] {
+      --bg:       #ffffff;
+      --surface:  #f0f0f5;
+      --border:   rgba(0,0,0,0.08);
+      --border-h: rgba(0,0,0,0.16);
+      --text:     #1d1d1f;
+      --muted:    rgba(29,29,31,0.55);
+      --dim:      rgba(29,29,31,0.28);
+      --accent:   #0066cc;
+    }
+
+    /* ── RESET ──────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body {
+      height: 100%;
+      /* NO page scroll — sections swap in place */
+      overflow: hidden;
+    }
+    body {
+      font-family: 'Sora', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      -webkit-font-smoothing: antialiased;
+      transition: background 0.4s, color 0.4s;
+    }
+    button { font-family: inherit; cursor: pointer; border: none; background: none; }
+    a      { text-decoration: none; color: inherit; }
+
+    /* ── NAV ────────────────────────────────── */
+    .nav {
+      position: fixed;
+      inset: 0 0 auto 0;
+      height: var(--nav-h);
+      z-index: 999;
+      background: rgba(0,0,0,0.75);
+      backdrop-filter: saturate(180%) blur(20px);
+      -webkit-backdrop-filter: saturate(180%) blur(20px);
+      border-bottom: 1px solid var(--border);
+      transition: background 0.3s;
+    }
+    [data-theme="light"] .nav {
+      background: rgba(255,255,255,0.75);
+    }
+    .nav-bar {
+      max-width: 1200px;
+      margin: 0 auto;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 28px;
+    }
+    .nav-logo {
+      font-size: 0.8rem;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      color: var(--text);
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 0;
+    }
+    .nav-link {
+      font-size: 0.76rem;
+      font-weight: 300;
+      letter-spacing: 0.01em;
+      color: var(--muted);
+      padding: 0 16px;
+      height: var(--nav-h);
+      display: flex;
+      align-items: center;
+      transition: color 0.18s;
+      white-space: nowrap;
+    }
+    .nav-link:hover, .nav-link.active { color: var(--text); }
+    .nav-link.active { color: var(--accent); }
+    .nav-theme {
+      font-size: 0.8rem;
+      color: var(--muted);
+      padding: 0 0 0 16px;
+      flex-shrink: 0;
+      transition: color 0.18s;
+    }
+    .nav-theme:hover { color: var(--text); }
+
+    /* ── VIEWS ──────────────────────────────── */
+    .view {
+      position: fixed;
+      top: var(--nav-h);
+      left: 0; right: 0; bottom: 0;
+      overflow-y: auto;
+      display: none;
+      opacity: 0;
+      transition: opacity 0.35s var(--ease);
+    }
+    .view.active { display: flex; flex-direction: column; }
+    .view.visible { opacity: 1; }
+
+    /* ── HERO ───────────────────────────────── */
+    #hero {
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 0 24px;
+      background: var(--bg);
+      overflow: hidden;
+      position: fixed; /* prevent hero from scrolling */
+    }
+    .glow {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(130px);
+      pointer-events: none;
+      opacity: 0.22;
+    }
+    .glow-a {
+      width: 680px; height: 680px;
+      background: radial-gradient(circle, #1466cc 0%, transparent 70%);
+      top: -160px; left: -160px;
+      animation: g 16s ease-in-out infinite alternate;
+    }
+    .glow-b {
+      width: 520px; height: 520px;
+      background: radial-gradient(circle, #0a4fa8 0%, transparent 70%);
+      bottom: -120px; right: -100px;
+      animation: g 20s ease-in-out infinite alternate-reverse;
+    }
+    @keyframes g {
+      from { transform: translate(0,0); }
+      to   { transform: translate(50px,35px); }
+    }
+    .hero-body { position: relative; z-index: 1; max-width: 720px; }
+
+    .eyebrow {
+      font-size: 0.68rem;
+      font-weight: 300;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 26px;
+      opacity: 0;
+      animation: up 0.7s var(--ease) 0.1s forwards;
+    }
+    .hero-name {
+      font-size: clamp(3rem, 8vw, 6rem);
+      font-weight: 300;
+      letter-spacing: -0.025em;
+      line-height: 1.05;
+      color: var(--text);
+      margin-bottom: 30px;
+      opacity: 0;
+      animation: up 0.8s var(--ease) 0.25s forwards;
+    }
+    .hero-desc {
+      font-size: clamp(0.9rem, 1.5vw, 1.05rem);
+      font-weight: 300;
+      line-height: 1.8;
+      color: var(--muted);
+      margin-bottom: 12px;
+      opacity: 0;
+      animation: up 0.8s var(--ease) 0.42s forwards;
+    }
+    .hero-sub {
+      font-size: clamp(0.78rem, 1.2vw, 0.9rem);
+      font-weight: 200;
+      line-height: 1.85;
+      color: var(--dim);
+      opacity: 0;
+      animation: up 0.8s var(--ease) 0.56s forwards;
+    }
+    @keyframes up {
+      from { opacity:0; transform:translateY(18px); }
+      to   { opacity:1; transform:translateY(0); }
+    }
+
+    /* ── PAGE SECTIONS ──────────────────────── */
+    .page {
+      max-width: 1020px;
+      margin: 0 auto;
+      padding: 64px 32px 100px;
+      width: 100%;
+    }
+    .page-head {
+      margin-bottom: 44px;
+      padding-bottom: 18px;
+      border-bottom: 1px solid var(--border);
+    }
+    .page-title {
+      font-size: clamp(1.9rem, 4vw, 3rem);
+      font-weight: 300;
+      letter-spacing: -0.02em;
+      color: var(--text);
+    }
+
+    /* ── CARDS ──────────────────────────────── */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px,1fr));
+      gap: 14px;
+    }
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 30px;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      transition: border-color 0.25s, transform 0.3s var(--ease), box-shadow 0.3s;
+    }
+    .card:hover {
+      border-color: var(--border-h);
+      transform: translateY(-4px);
+      box-shadow: 0 18px 48px rgba(0,0,0,0.28);
+    }
+    .card-solo { max-width: 560px; }
+    .c-num {
+      font-size: 0.6rem;
+      font-weight: 300;
+      letter-spacing: 0.18em;
+      color: var(--accent);
+      opacity: 0.65;
+    }
+    .c-org {
+      font-size: 0.68rem;
+      font-weight: 300;
+      letter-spacing: 0.08em;
+      color: var(--accent);
+    }
+    .c-title {
+      font-size: 1.1rem;
+      font-weight: 400;
+      letter-spacing: -0.01em;
+      line-height: 1.35;
+      color: var(--text);
+    }
+    .c-desc {
+      font-size: 0.84rem;
+      font-weight: 300;
+      line-height: 1.75;
+      color: var(--muted);
+      flex: 1;
+    }
+    .c-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 4px;
+    }
+    .c-tags span {
+      font-size: 0.62rem;
+      font-weight: 300;
+      letter-spacing: 0.04em;
+      padding: 3px 10px;
+      border: 1px solid var(--border-h);
+      border-radius: 100px;
+      color: var(--dim);
+    }
+    .c-cta {
+      font-size: 0.72rem;
+      font-weight: 300;
+      color: var(--accent);
+      opacity: 0;
+      transition: opacity 0.2s;
+      align-self: flex-start;
+    }
+    .card:hover .c-cta { opacity: 1; }
+
+    /* ── INTERESTS ──────────────────────────── */
+    .int-list { display: flex; flex-direction: column; }
+    .int-row {
+      display: grid;
+      grid-template-columns: 260px 1fr;
+      gap: 28px;
+      align-items: start;
+      padding: 30px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .int-row:first-child { border-top: 1px solid var(--border); }
+    .int-title {
+      font-size: 0.95rem;
+      font-weight: 400;
+      letter-spacing: -0.01em;
+      color: var(--text);
+    }
+    .int-desc {
+      font-size: 0.85rem;
+      font-weight: 300;
+      line-height: 1.75;
+      color: var(--muted);
+    }
+
+    /* ── CONTACT ────────────────────────────── */
+    .contact-lead {
+      font-size: 1rem;
+      font-weight: 300;
+      line-height: 1.75;
+      color: var(--muted);
+      margin-bottom: 44px;
+    }
+    .c-list { display: flex; flex-direction: column; }
+    .c-row {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 20px 0;
+      border-bottom: 1px solid var(--border);
+      transition: border-color 0.2s;
+    }
+    .c-row:first-child { border-top: 1px solid var(--border); }
+    .c-row:hover { border-color: var(--border-h); }
+    .c-row:hover .c-val { color: var(--text); }
+    .c-row:hover .c-arr { transform: translate(2px,-2px); }
+    .c-type {
+      font-size: 0.62rem;
+      font-weight: 300;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--accent);
+      width: 78px;
+      flex-shrink: 0;
+    }
+    .c-val {
+      font-size: 0.9rem;
+      font-weight: 300;
+      color: var(--muted);
+      flex: 1;
+      transition: color 0.2s;
+    }
+    .c-arr {
+      font-size: 0.85rem;
+      color: var(--dim);
+      transition: transform 0.2s;
+    }
+
+    /* ── MODAL ──────────────────────────────── */
+    .overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+      background: rgba(0,0,0,0.6);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s;
+    }
+    .overlay.open { opacity: 1; pointer-events: all; }
+    .modal {
+      background: var(--surface);
+      border: 1px solid var(--border-h);
+      border-radius: 20px;
+      max-width: 600px;
+      width: 100%;
+      max-height: 78vh;
+      overflow-y: auto;
+      padding: 44px;
+      position: relative;
+      transform: scale(0.96) translateY(20px);
+      transition: transform 0.35s var(--ease);
+      scrollbar-width: thin;
+      scrollbar-color: var(--border) transparent;
+    }
+    .overlay.open .modal { transform: scale(1) translateY(0); }
+    .modal-x {
+      position: absolute;
+      top: 16px; right: 16px;
+      width: 28px; height: 28px;
+      border-radius: 50%;
+      background: var(--border);
+      color: var(--muted);
+      font-size: 0.6rem;
+      display: grid;
+      place-items: center;
+      transition: background 0.2s, color 0.2s;
+    }
+    .modal-x:hover { background: var(--border-h); color: var(--text); }
+
+    #mc h2 {
+      font-size: 1.55rem;
+      font-weight: 300;
+      letter-spacing: -0.02em;
+      line-height: 1.25;
+      color: var(--text);
+      margin-bottom: 4px;
+    }
+    .m-org {
+      font-size: 0.68rem;
+      font-weight: 300;
+      letter-spacing: 0.1em;
+      color: var(--accent);
+      margin-bottom: 18px;
+    }
+    #mc p {
+      font-size: 0.85rem;
+      font-weight: 300;
+      line-height: 1.85;
+      color: var(--muted);
+      margin-bottom: 12px;
+    }
+    .m-hr { border: none; border-top: 1px solid var(--border); margin: 18px 0; }
+    .m-lbl {
+      font-size: 0.6rem;
+      font-weight: 300;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--accent);
+      opacity: 0.7;
+      margin: 22px 0 9px;
+    }
+    #mc ul { list-style: none; }
+    #mc ul li {
+      font-size: 0.84rem;
+      font-weight: 300;
+      line-height: 1.8;
+      color: var(--muted);
+      padding: 3px 0 3px 16px;
+      position: relative;
+    }
+    #mc ul li::before {
+      content: '—';
+      position: absolute; left: 0;
+      color: var(--accent);
+      font-size: 0.68rem;
+    }
+
+    /* ── SCROLLBAR ──────────────────────────── */
+    ::-webkit-scrollbar { width: 4px; }
+    ::-webkit-scrollbar-thumb { background: var(--border-h); border-radius: 10px; }
+
+    /* ── MOBILE ─────────────────────────────── */
+    @media (max-width: 680px) {
+      .nav-bar { padding: 0 16px; }
+      .nav-link { padding: 0 10px; font-size: 0.7rem; }
+      .grid { grid-template-columns: 1fr; }
+      .int-row { grid-template-columns: 1fr; gap: 8px; }
+      .page { padding: 36px 18px 80px; }
+      .modal { padding: 28px 20px; }
+    }
+
+  </style>
 </head>
 <body>
 
-  <!-- ── NAV ─────────────────────────────────────── -->
-  <nav class="nav" id="nav">
+  <!-- NAV -->
+  <nav class="nav">
     <div class="nav-bar">
-
-      <button class="nav-item logo-btn" onclick="goHome()">AC</button>
-
-      <button class="nav-item" onclick="show('projects')">Projects</button>
-      <button class="nav-item" onclick="show('internships')">Internships</button>
-      <button class="nav-item" onclick="show('achievements')">Achievements</button>
-      <button class="nav-item" onclick="show('interests')">Interests</button>
-      <button class="nav-item" onclick="show('contact')">Contact</button>
-
-      <button class="nav-item theme-toggle" id="themeBtn" onclick="toggleTheme()">☽</button>
-
+      <span class="nav-logo" onclick="go('hero')">AC</span>
+      <div class="nav-links">
+        <button class="nav-link" onclick="go('projects')">Projects</button>
+        <button class="nav-link" onclick="go('internships')">Internships</button>
+        <button class="nav-link" onclick="go('achievements')">Achievements</button>
+        <button class="nav-link" onclick="go('interests')">Interests</button>
+        <button class="nav-link" onclick="go('contact')">Contact</button>
+      </div>
+      <button class="nav-theme" id="themeBtn" onclick="toggleTheme()">☽</button>
     </div>
   </nav>
 
-  <!-- ── HERO ────────────────────────────────────── -->
+  <!-- HERO -->
   <section id="hero" class="view active">
-    <div class="hero-glow g1"></div>
-    <div class="hero-glow g2"></div>
+    <div class="glow glow-a"></div>
+    <div class="glow glow-b"></div>
     <div class="hero-body">
-      <p class="hero-eyebrow">Computer Science Undergraduate</p>
+      <p class="eyebrow">Computer Science Undergraduate</p>
       <h1 class="hero-name">Abheek Choudhury</h1>
-      <p class="hero-desc">
-        Building structured software systems, scientific computing pipelines,
-        and hardware-integrated engineering solutions.
-      </p>
-      <p class="hero-sub">
-        Focused on scalable architecture, mathematical modelling,
-        and translating complex theory into production-ready implementations.
-      </p>
+      <p class="hero-desc">Building structured software systems, scientific computing pipelines, and hardware-integrated engineering solutions.</p>
+      <p class="hero-sub">Focused on scalable architecture, mathematical modelling, and translating complex theory into production-ready implementations.</p>
     </div>
   </section>
 
-  <!-- ── PROJECTS ─────────────────────────────────── -->
+  <!-- PROJECTS -->
   <section id="projects" class="view">
     <div class="page">
-      <div class="page-title-row">
-        <h2 class="page-title">Projects</h2>
-      </div>
+      <div class="page-head"><h2 class="page-title">Projects</h2></div>
       <div class="grid">
-
         <div class="card" onclick="openModal('p1')">
-          <p class="card-num">01</p>
-          <h3 class="card-name">Plagiarism Detection System</h3>
-          <p class="card-desc">A modular document similarity engine built with structured object-oriented architecture — substring segmentation, pattern matching, and custom scoring.</p>
-          <div class="card-tags">
-            <span>Algorithms</span><span>OOP</span><span>NLP</span>
-          </div>
-          <p class="card-link">View details &rarr;</p>
+          <p class="c-num">01</p>
+          <h3 class="c-title">Plagiarism Detection System</h3>
+          <p class="c-desc">A modular document similarity engine built with structured object-oriented architecture — substring segmentation, pattern matching, and custom scoring.</p>
+          <div class="c-tags"><span>Algorithms</span><span>OOP</span><span>NLP</span></div>
+          <span class="c-cta">View details →</span>
         </div>
-
         <div class="card" onclick="openModal('p2')">
-          <p class="card-num">02</p>
-          <h3 class="card-name">Supernova Cosmology Analysis</h3>
-          <p class="card-desc">Computational analysis on real astronomical datasets — redshift-distance modelling, regression, and scientific visualisation pipelines in Python.</p>
-          <div class="card-tags">
-            <span>Python</span><span>Scientific Computing</span><span>Astronomy</span>
-          </div>
-          <p class="card-link">View details &rarr;</p>
+          <p class="c-num">02</p>
+          <h3 class="c-title">Supernova Cosmology Analysis</h3>
+          <p class="c-desc">Computational analysis on real astronomical datasets — redshift-distance modelling, regression, and scientific visualisation pipelines in Python.</p>
+          <div class="c-tags"><span>Python</span><span>Scientific Computing</span><span>Astronomy</span></div>
+          <span class="c-cta">View details →</span>
         </div>
-
       </div>
     </div>
   </section>
 
-  <!-- ── INTERNSHIPS ──────────────────────────────── -->
+  <!-- INTERNSHIPS -->
   <section id="internships" class="view">
     <div class="page">
-      <div class="page-title-row">
-        <h2 class="page-title">Internships</h2>
-      </div>
+      <div class="page-head"><h2 class="page-title">Internships</h2></div>
       <div class="grid">
-
         <div class="card" onclick="openModal('i1')">
-          <p class="card-num">01</p>
-          <p class="card-org">India Space Academy</p>
-          <h3 class="card-name">Astronomy and Astrophysics Intern</h3>
-          <p class="card-desc">Worked with Type Ia supernova datasets to estimate cosmological parameters and study the expansion of the universe.</p>
-          <div class="card-tags">
-            <span>Python</span><span>Research</span><span>Data Analysis</span>
-          </div>
-          <p class="card-link">View details &rarr;</p>
+          <p class="c-num">01</p>
+          <p class="c-org">India Space Academy</p>
+          <h3 class="c-title">Astronomy and Astrophysics Intern</h3>
+          <p class="c-desc">Worked with Type Ia supernova datasets to estimate cosmological parameters and study the expansion of the universe.</p>
+          <div class="c-tags"><span>Python</span><span>Research</span><span>Data Analysis</span></div>
+          <span class="c-cta">View details →</span>
         </div>
-
         <div class="card" onclick="openModal('i2')">
-          <p class="card-num">02</p>
-          <p class="card-org">India Space Lab</p>
-          <h3 class="card-name">Winter Technical Intern</h3>
-          <p class="card-desc">Structured technical training and guided project development in space technology systems and engineering problem solving.</p>
-          <div class="card-tags">
-            <span>Engineering</span><span>System Design</span><span>Documentation</span>
-          </div>
-          <p class="card-link">View details &rarr;</p>
+          <p class="c-num">02</p>
+          <p class="c-org">India Space Lab</p>
+          <h3 class="c-title">Winter Technical Intern</h3>
+          <p class="c-desc">Structured technical training and guided project development in space technology systems and engineering problem solving.</p>
+          <div class="c-tags"><span>Engineering</span><span>System Design</span><span>Documentation</span></div>
+          <span class="c-cta">View details →</span>
         </div>
-
       </div>
     </div>
   </section>
 
-  <!-- ── ACHIEVEMENTS ─────────────────────────────── -->
+  <!-- ACHIEVEMENTS -->
   <section id="achievements" class="view">
     <div class="page">
-      <div class="page-title-row">
-        <h2 class="page-title">Achievements</h2>
-      </div>
+      <div class="page-head"><h2 class="page-title">Achievements</h2></div>
       <div class="grid">
-
         <div class="card card-solo" onclick="openModal('a1')">
-          <p class="card-num">01</p>
-          <h3 class="card-name">Technical Leadership — IEEE PELS Chapter</h3>
-          <p class="card-desc">Progressed from volunteer to leadership, driving technical project initiatives, research programs, and knowledge-sharing sessions.</p>
-          <div class="card-tags">
-            <span>Leadership</span><span>IEEE</span><span>Mentoring</span>
-          </div>
-          <p class="card-link">View details &rarr;</p>
+          <p class="c-num">01</p>
+          <h3 class="c-title">Technical Leadership — IEEE PELS Chapter</h3>
+          <p class="c-desc">Progressed from volunteer to leadership, driving technical project initiatives, research programs, and knowledge-sharing sessions.</p>
+          <div class="c-tags"><span>Leadership</span><span>IEEE</span><span>Mentoring</span></div>
+          <span class="c-cta">View details →</span>
         </div>
-
       </div>
     </div>
   </section>
 
-  <!-- ── INTERESTS ─────────────────────────────────── -->
+  <!-- INTERESTS -->
   <section id="interests" class="view">
     <div class="page">
-      <div class="page-title-row">
-        <h2 class="page-title">Interests</h2>
-      </div>
-      <div class="interest-list">
-
-        <div class="interest-row">
+      <div class="page-head"><h2 class="page-title">Interests</h2></div>
+      <div class="int-list">
+        <div class="int-row">
           <h3 class="int-title">Software Engineering</h3>
           <p class="int-desc">Designing scalable, maintainable systems with clean modular architecture and performance-focused implementation.</p>
         </div>
-        <div class="interest-row">
+        <div class="int-row">
           <h3 class="int-title">Scientific Computing</h3>
           <p class="int-desc">Applying mathematical modelling, numerical methods, and computational analysis to real-world problems.</p>
         </div>
-        <div class="interest-row">
+        <div class="int-row">
           <h3 class="int-title">Hardware-Software Integration</h3>
           <p class="int-desc">Exploring systems that combine digital electronics with algorithmic logic to build functional engineering prototypes.</p>
         </div>
-
       </div>
     </div>
   </section>
 
-  <!-- ── CONTACT ───────────────────────────────────── -->
+  <!-- CONTACT -->
   <section id="contact" class="view">
-    <div class="page contact-page">
-      <div class="page-title-row">
-        <h2 class="page-title">Contact</h2>
-      </div>
+    <div class="page" style="max-width:660px;">
+      <div class="page-head"><h2 class="page-title">Contact</h2></div>
       <p class="contact-lead">Open to opportunities, collaborations, and interesting conversations.</p>
-      <div class="contact-list">
-        <a class="contact-row" href="mailto:abheekchoudhury28@gmail.com">
-          <span class="ct-label">Email</span>
-          <span class="ct-val">abheekchoudhury28@gmail.com</span>
-          <span class="ct-arrow">&#8599;</span>
+      <div class="c-list">
+        <a class="c-row" href="mailto:abheekchoudhury28@gmail.com">
+          <span class="c-type">Email</span>
+          <span class="c-val">abheekchoudhury28@gmail.com</span>
+          <span class="c-arr">↗</span>
         </a>
-        <a class="contact-row" href="https://linkedin.com/in/abheekchoudhury" target="_blank">
-          <span class="ct-label">LinkedIn</span>
-          <span class="ct-val">linkedin.com/in/abheekchoudhury</span>
-          <span class="ct-arrow">&#8599;</span>
+        <a class="c-row" href="https://linkedin.com/in/abheekchoudhury" target="_blank">
+          <span class="c-type">LinkedIn</span>
+          <span class="c-val">linkedin.com/in/abheekchoudhury</span>
+          <span class="c-arr">↗</span>
         </a>
       </div>
     </div>
   </section>
 
-  <!-- ── MODAL ─────────────────────────────────────── -->
+  <!-- MODAL -->
   <div id="overlay" class="overlay" onclick="closeModal()">
     <div class="modal" onclick="event.stopPropagation()">
-      <button class="modal-close" onclick="closeModal()">&#10005;</button>
-      <div id="modal-content"></div>
+      <button class="modal-x" onclick="closeModal()">✕</button>
+      <div id="mc"></div>
     </div>
   </div>
 
-  <script src="script.js"></script>
+  <script>
+
+    /* ── Init ──────────────────────────────── */
+    let cur = 'hero';
+
+    (function init() {
+      const t = localStorage.getItem('theme') || 'dark';
+      applyTheme(t);
+      const el = document.getElementById('hero');
+      el.style.display = 'flex';
+      requestAnimationFrame(() => requestAnimationFrame(() => el.classList.add('visible')));
+    })();
+
+    /* ── Navigate ──────────────────────────── */
+    function go(id) {
+      if (id === cur) return;
+
+      // hide previous
+      const prev = document.getElementById(cur);
+      prev.classList.remove('visible');
+      setTimeout(() => {
+        prev.style.display = 'none';
+        prev.classList.remove('active');
+      }, 340);
+
+      // show next
+      cur = id;
+      const next = document.getElementById(id);
+      next.style.display = 'flex';
+      next.classList.add('active');
+      requestAnimationFrame(() => requestAnimationFrame(() => next.classList.add('visible')));
+      next.scrollTop = 0;
+
+      // active nav state
+      document.querySelectorAll('.nav-link').forEach(b => b.classList.remove('active'));
+      const map = ['projects','internships','achievements','interests','contact'];
+      const i = map.indexOf(id);
+      if (i > -1) document.querySelectorAll('.nav-link')[i].classList.add('active');
+    }
+
+    /* ── Theme ─────────────────────────────── */
+    function applyTheme(t) {
+      document.documentElement.setAttribute('data-theme', t);
+      document.getElementById('themeBtn').textContent = t === 'dark' ? '☽' : '☀';
+      localStorage.setItem('theme', t);
+    }
+    function toggleTheme() {
+      applyTheme(document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
+    }
+
+    /* ── Modal ─────────────────────────────── */
+    const MODALS = {
+      p1: `<h2>Plagiarism Detection System</h2><hr class="m-hr">
+           <p>Designed and implemented a modular document similarity engine using structured object-oriented architecture, built to handle large document sets with performance-conscious comparison logic.</p>
+           <p class="m-lbl">Core Components</p>
+           <ul><li>Substring segmentation algorithms</li><li>Efficient pattern matching mechanisms</li><li>Custom similarity scoring frameworks</li><li>Optimised text preprocessing pipelines</li></ul>
+           <p class="m-lbl">Key Learnings</p>
+           <ul><li>Algorithmic design and time complexity optimisation</li><li>Data structuring for text processing</li><li>Clean software architecture principles</li><li>Extensibility for future NLP enhancements</li></ul>`,
+
+      p2: `<h2>Supernova Cosmology Analysis</h2><hr class="m-hr">
+           <p>Conducted computational analysis on real astronomical datasets to study universal expansion using Type Ia supernova data. Applied numerical computing to interpret cosmological constants.</p>
+           <p class="m-lbl">Implemented</p>
+           <ul><li>Redshift-distance modelling</li><li>Regression techniques for parameter estimation</li><li>Residual analysis for model validation</li><li>Scientific visualisation pipelines in Python</li></ul>
+           <p class="m-lbl">Skills Developed</p>
+           <ul><li>Statistical modelling and scientific computing</li><li>Research-oriented analytical thinking</li></ul>`,
+
+      i1: `<h2>Astronomy and Astrophysics Intern</h2><p class="m-org">India Space Academy</p><hr class="m-hr">
+           <p>Worked with Type Ia supernova datasets to estimate cosmological parameters and study the expansion of the universe.</p>
+           <p class="m-lbl">Responsibilities</p>
+           <ul><li>Data cleaning and preprocessing</li><li>Model fitting using Python</li><li>Curve fitting and statistical validation</li><li>Visualisation of astrophysical relationships</li></ul>
+           <p class="m-lbl">Exposure Gained</p>
+           <ul><li>Scientific computing workflows</li><li>Research documentation practices</li><li>Applied numerical modelling</li></ul>`,
+
+      i2: `<h2>Winter Technical Intern</h2><p class="m-org">India Space Lab</p><hr class="m-hr">
+           <p>Participated in structured technical training and guided project development in space technology systems, focused on translating engineering principles into real-world solutions.</p>
+           <p class="m-lbl">Worked On</p>
+           <ul><li>Applied engineering problem solving</li><li>Technical documentation</li><li>System design fundamentals</li><li>Practical implementation of theoretical concepts</li></ul>`,
+
+      a1: `<h2>Technical Leadership</h2><p class="m-org">IEEE PELS Chapter</p><hr class="m-hr">
+           <p>Progressed from volunteer to leadership roles, developing strong organisational, technical mentoring, and structured execution skills.</p>
+           <p class="m-lbl">Led</p>
+           <ul><li>Technical project initiatives</li><li>Research-oriented student programs</li><li>Collaborative engineering discussions</li><li>Knowledge-sharing sessions</li></ul>`
+    };
+
+    function openModal(id) {
+      if (!MODALS[id]) return;
+      document.getElementById('mc').innerHTML = MODALS[id];
+      document.getElementById('overlay').classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeModal() {
+      document.getElementById('overlay').classList.remove('open');
+      document.body.style.overflow = '';
+    }
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+
+  </script>
 </body>
 </html>
