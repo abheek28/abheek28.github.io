@@ -1,110 +1,167 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css">
-<script defer src="script.js"></script>
-
-<title>Abheek Choudhury</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Abheek Choudhury</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Jost:wght@200;300;400&family=DM+Mono:wght@300&display=swap" rel="stylesheet">
 </head>
-
 <body>
 
-<nav class="navbar">
-  <div class="logo">Abheek</div>
+  <!-- RIBBON -->
+  <nav class="ribbon">
+    <div class="ribbon-inner">
+      <button class="nav-link" onclick="showSection('projects')">Projects</button>
+      <button class="nav-link" onclick="showSection('internships')">Internships</button>
+      <button class="nav-link" onclick="showSection('achievements')">Achievements</button>
+      <button class="nav-link" onclick="showSection('interests')">Interests</button>
+      <button class="nav-link" onclick="showSection('contact')">Contact</button>
+      <div class="ribbon-sep"></div>
+      <button class="theme-btn" id="themeBtn" aria-label="Toggle theme">
+        <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+        <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      </button>
+    </div>
+  </nav>
 
-  <div class="nav-links">
-    <span data-section="projects">Projects</span>
-    <span data-section="internships">Internships</span>
-    <span data-section="achievements">Achievements</span>
-    <span data-section="interests">Interests</span>
-    <span data-section="contact">Contact</span>
-  </div>
+  <!-- HERO -->
+  <section class="hero" id="hero">
+    <div class="noise"></div>
+    <div class="glow-l"></div>
+    <div class="glow-r"></div>
+    <div class="hero-inner">
+      <p class="eyebrow">Computer Science Undergraduate</p>
+      <h1 class="hero-name">
+        <span class="n1">Abheek</span>
+        <span class="n2"><em>Choudhury</em></span>
+      </h1>
+      <p class="hero-desc">
+        Building structured software systems,<br>
+        scientific computing pipelines &amp;<br>
+        hardware-integrated engineering solutions.
+      </p>
+    </div>
+    <div class="hero-strip">
+      <span>Scalable Architecture</span>
+      <span class="dot">·</span>
+      <span>Mathematical Modelling</span>
+      <span class="dot">·</span>
+      <span>Production-Ready Systems</span>
+    </div>
+  </section>
 
-  <div class="theme-wrapper">
-    <span id="theme-toggle">🌙</span>
-    <div class="tooltip">Switch to Light Mode</div>
-  </div>
-</nav>
+  <!-- SECTIONS -->
+  <section class="page hidden" id="projects">
+    <div class="page-inner">
+      <div class="page-head"><span class="pg-num">01</span><h2>Projects</h2></div>
+      <div class="cards">
+        <div class="card" onclick="openModal('proj1')">
+          <span class="c-n">01</span>
+          <h3>Plagiarism Detection System</h3>
+          <p>A modular document similarity engine — substring segmentation, pattern matching, and custom scoring.</p>
+          <div class="tags"><span>Algorithms</span><span>OOP</span><span>NLP</span></div>
+          <span class="c-cta">Read more →</span>
+        </div>
+        <div class="card" onclick="openModal('proj2')">
+          <span class="c-n">02</span>
+          <h3>Supernova Cosmology Analysis</h3>
+          <p>Computational analysis on real astronomical datasets — redshift–distance modelling and regression pipelines.</p>
+          <div class="tags"><span>Python</span><span>Scientific Computing</span><span>Astronomy</span></div>
+          <span class="c-cta">Read more →</span>
+        </div>
+      </div>
+    </div>
+  </section>
 
-<section class="hero">
-  <h1>Abheek Choudhury</h1>
-  <p>Computer Science Undergraduate building structured software, research systems, and hardware-integrated solutions.</p>
-</section>
+  <section class="page hidden" id="internships">
+    <div class="page-inner">
+      <div class="page-head"><span class="pg-num">02</span><h2>Internships</h2></div>
+      <div class="cards">
+        <div class="card" onclick="openModal('intern1')">
+          <span class="c-n">01</span>
+          <p class="c-org">India Space Academy</p>
+          <h3>Astronomy &amp; Astrophysics Intern</h3>
+          <p>Type Ia supernova datasets, cosmological parameter estimation and scientific visualisation.</p>
+          <div class="tags"><span>Python</span><span>Research</span><span>Data Analysis</span></div>
+          <span class="c-cta">Read more →</span>
+        </div>
+        <div class="card" onclick="openModal('intern2')">
+          <span class="c-n">02</span>
+          <p class="c-org">India Space Lab</p>
+          <h3>Winter Technical Intern</h3>
+          <p>Structured technical training in space technology systems, system design and engineering documentation.</p>
+          <div class="tags"><span>Engineering</span><span>System Design</span><span>Documentation</span></div>
+          <span class="c-cta">Read more →</span>
+        </div>
+      </div>
+    </div>
+  </section>
 
-<section id="projects" class="section">
-  <h2>Projects</h2>
+  <section class="page hidden" id="achievements">
+    <div class="page-inner">
+      <div class="page-head"><span class="pg-num">03</span><h2>Achievements</h2></div>
+      <div class="cards">
+        <div class="card card-wide" onclick="openModal('achieve1')">
+          <span class="c-n">01</span>
+          <h3>Technical Leadership — IEEE PELS Chapter</h3>
+          <p>Progressed from volunteer to leadership, driving project initiatives, research programs and knowledge-sharing sessions.</p>
+          <div class="tags"><span>Leadership</span><span>IEEE</span><span>Mentoring</span></div>
+          <span class="c-cta">Read more →</span>
+        </div>
+      </div>
+    </div>
+  </section>
 
-  <div class="expand">
-    <div class="title">Plagiarism Detection System</div>
-    <div class="desc">
-      Built a scalable string-matching engine using modular OOP architecture. Implemented substring segmentation and similarity scoring optimized for large datasets.
+  <section class="page hidden" id="interests">
+    <div class="page-inner">
+      <div class="page-head"><span class="pg-num">04</span><h2>Interests</h2></div>
+      <div class="interests">
+        <div class="int-row">
+          <span class="int-ic">⬡</span>
+          <div><h3>Software Engineering</h3><p>Scalable, maintainable systems with clean modular architecture and performance-focused implementation.</p></div>
+        </div>
+        <div class="int-row">
+          <span class="int-ic">∿</span>
+          <div><h3>Scientific Computing</h3><p>Mathematical modelling, numerical methods, and computational analysis applied to real-world problems.</p></div>
+        </div>
+        <div class="int-row">
+          <span class="int-ic">⌬</span>
+          <div><h3>Hardware–Software Integration</h3><p>Systems combining digital electronics with algorithmic logic to build functional engineering prototypes.</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="page hidden" id="contact">
+    <div class="page-inner">
+      <div class="page-head"><span class="pg-num">05</span><h2>Contact</h2></div>
+      <p class="contact-lead"><em>Open to opportunities, collaborations,<br>and interesting conversations.</em></p>
+      <div class="contact-rows">
+        <a href="mailto:abheekchoudhury28@gmail.com" class="c-row">
+          <span class="c-type">Email</span>
+          <span class="c-val">abheekchoudhury28@gmail.com</span>
+          <span class="c-arr">↗</span>
+        </a>
+        <a href="https://linkedin.com/in/abheekchoudhury" target="_blank" class="c-row">
+          <span class="c-type">LinkedIn</span>
+          <span class="c-val">linkedin.com/in/abheekchoudhury</span>
+          <span class="c-arr">↗</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- MODAL -->
+  <div class="overlay" id="overlay" onclick="closeModal()">
+    <div class="modal" onclick="event.stopPropagation()">
+      <button class="modal-x" onclick="closeModal()">✕</button>
+      <div id="modalBody"></div>
     </div>
   </div>
 
-  <div class="expand">
-    <div class="title">Supernova Cosmology Analysis</div>
-    <div class="desc">
-      Conducted numerical modeling using Python to analyze astronomical datasets and interpret cosmological expansion.
-    </div>
-  </div>
-</section>
-
-<section id="internships" class="section">
-  <h2>Internships</h2>
-
-  <div class="expand">
-    <div class="title">India Space Academy</div>
-    <div class="desc">
-      Worked on Type Ia supernova datasets and applied scientific computing techniques.
-    </div>
-  </div>
-
-  <div class="expand">
-    <div class="title">India Space Lab</div>
-    <div class="desc">
-      Participated in structured technical training and project-based learning programs in space technology.
-    </div>
-  </div>
-</section>
-
-<section id="achievements" class="section">
-  <h2>Achievements</h2>
-
-  <div class="expand">
-    <div class="title">Technical Leadership — IEEE PELS</div>
-    <div class="desc">
-      Led technical initiatives and guided research-driven student programs.
-    </div>
-  </div>
-</section>
-
-<section id="interests" class="section">
-  <h2>Interests</h2>
-
-  <div class="expand">
-    <div class="title">Software Engineering</div>
-    <div class="desc">
-      Focused on scalable architecture and modular backend systems.
-    </div>
-  </div>
-
-  <div class="expand">
-    <div class="title">Scientific Computing</div>
-    <div class="desc">
-      Applying mathematical modeling to real-world systems.
-    </div>
-  </div>
-</section>
-
-<section id="contact" class="section">
-  <h2>Contact</h2>
-  <p>Email: abheekchoudhury28@gmail.com</p>
-  <p>LinkedIn: linkedin.com/in/abheekchoudhury</p>
-</section>
-
+  <script src="script.js"></script>
 </body>
 </html>
