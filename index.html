@@ -3,147 +3,147 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Abheek Choudhury | Portfolio</title>
+<title>Abheek Choudhury</title>
 
 <link rel="stylesheet" href="style.css">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <script defer src="script.js"></script>
-
 </head>
 
 <body>
 
-<nav>
-  <div class="nav-container">
+<header class="navbar">
+  <div class="nav-inner">
     <div class="logo">Abheek</div>
-    <ul class="nav-links">
-      <li><a href="#about">About</a></li>
-      <li><a href="#projects">Projects</a></li>
-      <li><a href="#internships">Internships</a></li>
-      <li><a href="#leadership">Leadership</a></li>
-      <li><a href="#blog">Blog</a></li>
-      <li><a href="#contact">Contact</a></li>
-    </ul>
+    <nav>
+      <a href="#projects">Projects</a>
+      <a href="#internships">Internships</a>
+      <a href="#interests">Interests</a>
+    </nav>
     <button id="themeToggle">🌙</button>
-  </div>
-</nav>
-
-<header class="hero">
-  <h1>Abheek Choudhury</h1>
-  <p>Computer Science Undergraduate | IEEE PELS Projects Head | Developer</p>
-  <div class="hero-buttons">
-    <a href="https://www.linkedin.com/in/abheekchoudhury" target="_blank">LinkedIn</a>
-    <a href="https://github.com/abheek28" target="_blank">GitHub</a>
   </div>
 </header>
 
-<section id="about" class="section fade-in">
-<h2>About Me</h2>
-<p>
-Computer Science undergraduate at VIT with strong foundations in C, Java, OOP, algorithms and data analysis.
-Experienced in research projects, internships and hardware system development.
-</p>
+<section class="hero">
+  <div class="hero-inner">
+    <h1>Abheek Choudhury</h1>
+    <p>Computer Science Undergraduate building software, research systems, and hardware-integrated solutions.</p>
+  </div>
 </section>
 
-<section id="projects" class="section fade-in">
-<h2>Projects</h2>
+<main class="main-container">
 
-<div class="grid">
+  <!-- PROJECTS -->
+  <section id="projects" class="section">
+    <h2 class="section-title">Projects</h2>
 
-  <div class="card">
-    <img src="https://images.unsplash.com/photo-1518770660439-4636190af475" alt="">
-    <h3>Plagiarism Detection System</h3>
-    <p>String-matching based document similarity detection using modular OOP design.</p>
-  </div>
+    <div class="accordion">
 
-  <div class="card">
-    <img src="https://images.unsplash.com/photo-1446776811953-b23d57bd21aa" alt="">
-    <h3>Supernova Cosmology Analysis</h3>
-    <p>Analyzed astronomical datasets using Python for numerical computing and model fitting.</p>
-  </div>
+      <div class="accordion-item">
+        <button class="accordion-header">Plagiarism Detection System</button>
+        <div class="accordion-body">
+          <p>
+          Developed a structured string-matching engine to detect document similarity.
+          Implemented substring segmentation, pattern matching, and scoring mechanisms.
+          Designed scalable OOP architecture to handle modular document processing.
+          Optimized comparison performance for large datasets.
+          </p>
+        </div>
+      </div>
 
-  <div class="card">
-    <img src="https://images.unsplash.com/photo-1581090700227-1e8a6b5e7d68" alt="">
-    <h3>Reaction Time Tester</h3>
-    <p>Built hardware timing system using NE555 and CD4026 counters with 7-segment displays.</p>
-  </div>
+      <div class="accordion-item">
+        <button class="accordion-header">Supernova Cosmology Analysis</button>
+        <div class="accordion-body">
+          <p>
+          Conducted numerical analysis on astronomical datasets using Python.
+          Modeled redshift–distance relationships to study cosmological expansion.
+          Applied regression techniques and residual analysis to validate predictions.
+          Built visualization pipelines to interpret scientific data.
+          </p>
+        </div>
+      </div>
 
-  <div class="card">
-    <img src="https://images.unsplash.com/photo-1509395176047-4a66953fd231" alt="">
-    <h3>Memory Testing Device</h3>
-    <p>Level-based LED cognitive testing system with progressive logic sequencing.</p>
-  </div>
+      <div class="accordion-item">
+        <button class="accordion-header">Reaction Time Tester (Hardware)</button>
+        <div class="accordion-body">
+          <p>
+          Designed a hardware-based timing system using NE555 timers and CD4026 counters.
+          Integrated 7-segment displays with Start, Stop, and Reset logic.
+          Ensured accurate timing control through sequential circuit design.
+          </p>
+        </div>
+      </div>
 
-</div>
-</section>
+    </div>
+  </section>
 
-<section id="internships" class="section fade-in">
-<h2>Internship Experience</h2>
 
-<div class="card">
-<h3>Astronomy & Astrophysics Intern – India Space Academy</h3>
-<p>Worked on real supernova datasets, applied Python for data modeling and cosmological analysis.</p>
-</div>
+  <!-- INTERNSHIPS -->
+  <section id="internships" class="section">
+    <h2 class="section-title">Internships</h2>
 
-<div class="card">
-<h3>Winter Technical Intern – India Space Lab</h3>
-<p>Participating in structured technical training and project-based learning programs in space technology.</p>
-</div>
+    <div class="accordion">
 
-</section>
+      <div class="accordion-item">
+        <button class="accordion-header">Astronomy & Astrophysics Intern – India Space Academy</button>
+        <div class="accordion-body">
+          <p>
+          Worked with real Type Ia supernova datasets to estimate cosmological parameters.
+          Applied Python-based numerical computing for curve fitting and model evaluation.
+          Interpreted astronomical observations through data visualization workflows.
+          Developed structured research documentation and analytical summaries.
+          </p>
+        </div>
+      </div>
 
-<section id="leadership" class="section fade-in">
-<h2>Leadership</h2>
+      <div class="accordion-item">
+        <button class="accordion-header">Winter Technical Intern – India Space Lab</button>
+        <div class="accordion-body">
+          <p>
+          Participating in structured technical training programs focused on applied engineering.
+          Engaged in guided project development and technical documentation practices.
+          Strengthened system-level thinking and structured problem-solving approaches.
+          </p>
+        </div>
+      </div>
 
-<div class="card">
-<h3>Projects Head – IEEE PELS Chapter, VIT Vellore</h3>
-<p>Led technical initiatives, organized hackathons and expert talks, and guided research-driven student projects.</p>
-</div>
+    </div>
+  </section>
 
-<div class="card">
-<h3>Achievement</h3>
-<p>Secured 2nd Place in Coding Relay Hackathon organized by SIAM during Yantra at VIT.</p>
-</div>
 
-</section>
+  <!-- INTERESTS -->
+  <section id="interests" class="section">
+    <h2 class="section-title">Interests</h2>
 
-<section id="blog" class="section fade-in">
-<h2>Blog</h2>
+    <div class="accordion">
 
-<div class="grid">
-  <div class="card">
-    <h3>Understanding String Matching Algorithms</h3>
-    <p>Exploring pattern matching techniques for plagiarism detection systems.</p>
-  </div>
+      <div class="accordion-item">
+        <button class="accordion-header">Software Engineering</button>
+        <div class="accordion-body">
+          <p>
+          Focused on clean architecture, scalable design patterns, and modular system development.
+          Interested in backend systems, performance optimization, and structured coding practices.
+          </p>
+        </div>
+      </div>
 
-  <div class="card">
-    <h3>How Supernovae Help Measure the Universe</h3>
-    <p>A breakdown of cosmological expansion analysis using real astronomical datasets.</p>
-  </div>
-</div>
+      <div class="accordion-item">
+        <button class="accordion-header">Scientific Computing</button>
+        <div class="accordion-body">
+          <p>
+          Exploring numerical methods, data modeling, and research-driven computational systems.
+          Passionate about applying mathematical reasoning to real-world engineering challenges.
+          </p>
+        </div>
+      </div>
 
-</section>
+    </div>
+  </section>
 
-<section id="contact" class="section fade-in">
-<h2>Contact</h2>
-
-<form>
-  <input type="text" placeholder="Your Name">
-  <input type="email" placeholder="Your Email">
-  <textarea rows="5" placeholder="Your Message"></textarea>
-  <button type="submit">Send Message</button>
-</form>
-
-<p>
-<a href="mailto:abheekchoudhury28@gmail.com">Email</a> |
-<a href="https://www.linkedin.com/in/abheekchoudhury" target="_blank">LinkedIn</a> |
-<a href="https://github.com/abheek28" target="_blank">GitHub</a>
-</p>
-
-</section>
+</main>
 
 <footer>
-<p>© 2026 Abheek Choudhury. Built with GitHub Pages.</p>
+  <p>© 2026 Abheek Choudhury</p>
 </footer>
 
 </body>
