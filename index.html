@@ -3,59 +3,102 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Abheek Choudhury</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
 <script defer src="script.js"></script>
+
+<title>Abheek Choudhury</title>
 </head>
 
 <body>
 
-<header class="navbar">
-  <div class="nav-inner">
-    <div class="logo">Abheek</div>
-
-    <nav>
-      <a href="#projects" class="nav-item">Projects</a>
-      <a href="#internships" class="nav-item">Internships</a>
-      <a href="#achievements" class="nav-item">Achievements</a>
-      <a href="#interests" class="nav-item">Interests</a>
-    </nav>
-
-    <button id="themeToggle">🌙</button>
+<nav class="navbar">
+  <div class="logo">Abheek</div>
+  <div class="nav-links">
+    <span data-section="projects">Projects</span>
+    <span data-section="internships">Internships</span>
+    <span data-section="achievements">Achievements</span>
+    <span data-section="interests">Interests</span>
+    <span data-section="contact">Contact</span>
+    <span id="theme-toggle">🌙</span>
   </div>
-</header>
+</nav>
 
 <section class="hero">
   <h1>Abheek Choudhury</h1>
-  <p>
-    Computer Science Undergraduate building structured software,
-    research systems, and hardware-integrated solutions.
-  </p>
+  <p>Computer Science Undergraduate building structured software, research systems, and hardware-integrated solutions.</p>
 </section>
 
-<section id="projects" class="section">
+<section id="projects" class="content-section">
   <h2>Projects</h2>
-  <p>Plagiarism Detection System</p>
-  <p>Supernova Cosmology Analysis</p>
+
+  <div class="item">
+    <div class="item-title">Plagiarism Detection System</div>
+    <div class="item-content">
+      Designed and implemented a scalable string-matching engine using structured OOP architecture. Developed substring segmentation algorithms, pattern matching logic, and similarity scoring frameworks. Optimized performance for large-scale document comparison.
+    </div>
+  </div>
+
+  <div class="item">
+    <div class="item-title">Supernova Cosmology Analysis</div>
+    <div class="item-content">
+      Conducted numerical modeling using Python to analyze astronomical datasets. Modeled redshift-distance relationships and performed regression analysis. Built visualization pipelines for scientific interpretation.
+    </div>
+  </div>
 </section>
 
-<section id="internships" class="section">
+<section id="internships" class="content-section">
   <h2>Internships</h2>
-  <p>India Space Academy</p>
-  <p>India Space Lab</p>
+
+  <div class="item">
+    <div class="item-title">Astronomy & Astrophysics Intern — India Space Academy</div>
+    <div class="item-content">
+      Worked on real Type Ia supernova datasets to estimate cosmological parameters. Applied Python-based modeling and scientific computing techniques to analyze universal expansion patterns.
+    </div>
+  </div>
+
+  <div class="item">
+    <div class="item-title">Winter Technical Intern — India Space Lab</div>
+    <div class="item-content">
+      Participated in structured technical training and project-based learning programs in space technology. Strengthened applied engineering problem-solving and documentation skills.
+    </div>
+  </div>
 </section>
 
-<section id="achievements" class="section">
+<section id="achievements" class="content-section">
   <h2>Achievements</h2>
-  <p>Technical Leadership – IEEE PELS</p>
+
+  <div class="item">
+    <div class="item-title">Technical Leadership — IEEE PELS</div>
+    <div class="item-content">
+      Led technical initiatives, organized expert talks, and guided research-driven student development programs.
+    </div>
+  </div>
 </section>
 
-<section id="interests" class="section">
+<section id="interests" class="content-section">
   <h2>Interests</h2>
-  <p>Software Engineering</p>
-  <p>Scientific Computing</p>
+
+  <div class="item">
+    <div class="item-title">Software Engineering</div>
+    <div class="item-content">
+      Focused on scalable architecture, clean modular systems, and structured backend engineering.
+    </div>
+  </div>
+
+  <div class="item">
+    <div class="item-title">Scientific Computing</div>
+    <div class="item-content">
+      Interested in applying mathematical modeling and computational methods to real-world systems.
+    </div>
+  </div>
+</section>
+
+<section id="contact" class="content-section">
+  <h2>Contact</h2>
+  <p>Email: abheekchoudhury28@gmail.com</p>
+  <p>LinkedIn: https://www.linkedin.com/in/abheekchoudhury</p>
 </section>
 
 </body>
