@@ -1,164 +1,192 @@
 <!DOCTYPE html>
 <html lang="en" data-theme="dark">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Abheek Choudhury</title>
-  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="style.css"/>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Jost:wght@200;300;400&family=DM+Mono:wght@300&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=SF+Pro+Display:wght@200;300;400&family=Sora:wght@200;300;400;500&display=swap" rel="stylesheet">
+  <!-- Sora is the clean, modern, consistent font we use throughout -->
 </head>
 <body>
 
-  <!-- RIBBON -->
-  <nav class="ribbon">
-    <div class="ribbon-inner">
-      <button class="nav-link" onclick="showSection('projects')">Projects</button>
-      <button class="nav-link" onclick="showSection('internships')">Internships</button>
-      <button class="nav-link" onclick="showSection('achievements')">Achievements</button>
-      <button class="nav-link" onclick="showSection('interests')">Interests</button>
-      <button class="nav-link" onclick="showSection('contact')">Contact</button>
-      <div class="ribbon-sep"></div>
-      <button class="theme-btn" id="themeBtn" aria-label="Toggle theme">
-        <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
-        <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
-      </button>
+  <!-- ── NAV ─────────────────────────────────────── -->
+  <nav class="nav" id="nav">
+    <div class="nav-bar">
+
+      <button class="nav-item logo-btn" onclick="goHome()">AC</button>
+
+      <button class="nav-item" onclick="show('projects')">Projects</button>
+      <button class="nav-item" onclick="show('internships')">Internships</button>
+      <button class="nav-item" onclick="show('achievements')">Achievements</button>
+      <button class="nav-item" onclick="show('interests')">Interests</button>
+      <button class="nav-item" onclick="show('contact')">Contact</button>
+
+      <button class="nav-item theme-toggle" id="themeBtn" onclick="toggleTheme()">☽</button>
+
     </div>
   </nav>
 
-  <!-- HERO -->
-  <section class="hero" id="hero">
-    <div class="noise"></div>
-    <div class="glow-l"></div>
-    <div class="glow-r"></div>
-    <div class="hero-inner">
-      <p class="eyebrow">Computer Science Undergraduate</p>
-      <h1 class="hero-name">
-        <span class="n1">Abheek</span>
-        <span class="n2"><em>Choudhury</em></span>
-      </h1>
+  <!-- ── HERO ────────────────────────────────────── -->
+  <section id="hero" class="view active">
+    <div class="hero-glow g1"></div>
+    <div class="hero-glow g2"></div>
+    <div class="hero-body">
+      <p class="hero-eyebrow">Computer Science Undergraduate</p>
+      <h1 class="hero-name">Abheek Choudhury</h1>
       <p class="hero-desc">
-        Building structured software systems,<br>
-        scientific computing pipelines &amp;<br>
-        hardware-integrated engineering solutions.
+        Building structured software systems, scientific computing pipelines,
+        and hardware-integrated engineering solutions.
+      </p>
+      <p class="hero-sub">
+        Focused on scalable architecture, mathematical modelling,
+        and translating complex theory into production-ready implementations.
       </p>
     </div>
-    <div class="hero-strip">
-      <span>Scalable Architecture</span>
-      <span class="dot">·</span>
-      <span>Mathematical Modelling</span>
-      <span class="dot">·</span>
-      <span>Production-Ready Systems</span>
-    </div>
   </section>
 
-  <!-- SECTIONS -->
-  <section class="page hidden" id="projects">
-    <div class="page-inner">
-      <div class="page-head"><span class="pg-num">01</span><h2>Projects</h2></div>
-      <div class="cards">
-        <div class="card" onclick="openModal('proj1')">
-          <span class="c-n">01</span>
-          <h3>Plagiarism Detection System</h3>
-          <p>A modular document similarity engine — substring segmentation, pattern matching, and custom scoring.</p>
-          <div class="tags"><span>Algorithms</span><span>OOP</span><span>NLP</span></div>
-          <span class="c-cta">Read more →</span>
+  <!-- ── PROJECTS ─────────────────────────────────── -->
+  <section id="projects" class="view">
+    <div class="page">
+      <div class="page-title-row">
+        <h2 class="page-title">Projects</h2>
+      </div>
+      <div class="grid">
+
+        <div class="card" onclick="openModal('p1')">
+          <p class="card-num">01</p>
+          <h3 class="card-name">Plagiarism Detection System</h3>
+          <p class="card-desc">A modular document similarity engine built with structured object-oriented architecture — substring segmentation, pattern matching, and custom scoring.</p>
+          <div class="card-tags">
+            <span>Algorithms</span><span>OOP</span><span>NLP</span>
+          </div>
+          <p class="card-link">View details &rarr;</p>
         </div>
-        <div class="card" onclick="openModal('proj2')">
-          <span class="c-n">02</span>
-          <h3>Supernova Cosmology Analysis</h3>
-          <p>Computational analysis on real astronomical datasets — redshift–distance modelling and regression pipelines.</p>
-          <div class="tags"><span>Python</span><span>Scientific Computing</span><span>Astronomy</span></div>
-          <span class="c-cta">Read more →</span>
+
+        <div class="card" onclick="openModal('p2')">
+          <p class="card-num">02</p>
+          <h3 class="card-name">Supernova Cosmology Analysis</h3>
+          <p class="card-desc">Computational analysis on real astronomical datasets — redshift-distance modelling, regression, and scientific visualisation pipelines in Python.</p>
+          <div class="card-tags">
+            <span>Python</span><span>Scientific Computing</span><span>Astronomy</span>
+          </div>
+          <p class="card-link">View details &rarr;</p>
         </div>
+
       </div>
     </div>
   </section>
 
-  <section class="page hidden" id="internships">
-    <div class="page-inner">
-      <div class="page-head"><span class="pg-num">02</span><h2>Internships</h2></div>
-      <div class="cards">
-        <div class="card" onclick="openModal('intern1')">
-          <span class="c-n">01</span>
-          <p class="c-org">India Space Academy</p>
-          <h3>Astronomy &amp; Astrophysics Intern</h3>
-          <p>Type Ia supernova datasets, cosmological parameter estimation and scientific visualisation.</p>
-          <div class="tags"><span>Python</span><span>Research</span><span>Data Analysis</span></div>
-          <span class="c-cta">Read more →</span>
+  <!-- ── INTERNSHIPS ──────────────────────────────── -->
+  <section id="internships" class="view">
+    <div class="page">
+      <div class="page-title-row">
+        <h2 class="page-title">Internships</h2>
+      </div>
+      <div class="grid">
+
+        <div class="card" onclick="openModal('i1')">
+          <p class="card-num">01</p>
+          <p class="card-org">India Space Academy</p>
+          <h3 class="card-name">Astronomy and Astrophysics Intern</h3>
+          <p class="card-desc">Worked with Type Ia supernova datasets to estimate cosmological parameters and study the expansion of the universe.</p>
+          <div class="card-tags">
+            <span>Python</span><span>Research</span><span>Data Analysis</span>
+          </div>
+          <p class="card-link">View details &rarr;</p>
         </div>
-        <div class="card" onclick="openModal('intern2')">
-          <span class="c-n">02</span>
-          <p class="c-org">India Space Lab</p>
-          <h3>Winter Technical Intern</h3>
-          <p>Structured technical training in space technology systems, system design and engineering documentation.</p>
-          <div class="tags"><span>Engineering</span><span>System Design</span><span>Documentation</span></div>
-          <span class="c-cta">Read more →</span>
+
+        <div class="card" onclick="openModal('i2')">
+          <p class="card-num">02</p>
+          <p class="card-org">India Space Lab</p>
+          <h3 class="card-name">Winter Technical Intern</h3>
+          <p class="card-desc">Structured technical training and guided project development in space technology systems and engineering problem solving.</p>
+          <div class="card-tags">
+            <span>Engineering</span><span>System Design</span><span>Documentation</span>
+          </div>
+          <p class="card-link">View details &rarr;</p>
         </div>
+
       </div>
     </div>
   </section>
 
-  <section class="page hidden" id="achievements">
-    <div class="page-inner">
-      <div class="page-head"><span class="pg-num">03</span><h2>Achievements</h2></div>
-      <div class="cards">
-        <div class="card card-wide" onclick="openModal('achieve1')">
-          <span class="c-n">01</span>
-          <h3>Technical Leadership — IEEE PELS Chapter</h3>
-          <p>Progressed from volunteer to leadership, driving project initiatives, research programs and knowledge-sharing sessions.</p>
-          <div class="tags"><span>Leadership</span><span>IEEE</span><span>Mentoring</span></div>
-          <span class="c-cta">Read more →</span>
+  <!-- ── ACHIEVEMENTS ─────────────────────────────── -->
+  <section id="achievements" class="view">
+    <div class="page">
+      <div class="page-title-row">
+        <h2 class="page-title">Achievements</h2>
+      </div>
+      <div class="grid">
+
+        <div class="card card-solo" onclick="openModal('a1')">
+          <p class="card-num">01</p>
+          <h3 class="card-name">Technical Leadership — IEEE PELS Chapter</h3>
+          <p class="card-desc">Progressed from volunteer to leadership, driving technical project initiatives, research programs, and knowledge-sharing sessions.</p>
+          <div class="card-tags">
+            <span>Leadership</span><span>IEEE</span><span>Mentoring</span>
+          </div>
+          <p class="card-link">View details &rarr;</p>
         </div>
+
       </div>
     </div>
   </section>
 
-  <section class="page hidden" id="interests">
-    <div class="page-inner">
-      <div class="page-head"><span class="pg-num">04</span><h2>Interests</h2></div>
-      <div class="interests">
-        <div class="int-row">
-          <span class="int-ic">⬡</span>
-          <div><h3>Software Engineering</h3><p>Scalable, maintainable systems with clean modular architecture and performance-focused implementation.</p></div>
+  <!-- ── INTERESTS ─────────────────────────────────── -->
+  <section id="interests" class="view">
+    <div class="page">
+      <div class="page-title-row">
+        <h2 class="page-title">Interests</h2>
+      </div>
+      <div class="interest-list">
+
+        <div class="interest-row">
+          <h3 class="int-title">Software Engineering</h3>
+          <p class="int-desc">Designing scalable, maintainable systems with clean modular architecture and performance-focused implementation.</p>
         </div>
-        <div class="int-row">
-          <span class="int-ic">∿</span>
-          <div><h3>Scientific Computing</h3><p>Mathematical modelling, numerical methods, and computational analysis applied to real-world problems.</p></div>
+        <div class="interest-row">
+          <h3 class="int-title">Scientific Computing</h3>
+          <p class="int-desc">Applying mathematical modelling, numerical methods, and computational analysis to real-world problems.</p>
         </div>
-        <div class="int-row">
-          <span class="int-ic">⌬</span>
-          <div><h3>Hardware–Software Integration</h3><p>Systems combining digital electronics with algorithmic logic to build functional engineering prototypes.</p></div>
+        <div class="interest-row">
+          <h3 class="int-title">Hardware-Software Integration</h3>
+          <p class="int-desc">Exploring systems that combine digital electronics with algorithmic logic to build functional engineering prototypes.</p>
         </div>
+
       </div>
     </div>
   </section>
 
-  <section class="page hidden" id="contact">
-    <div class="page-inner">
-      <div class="page-head"><span class="pg-num">05</span><h2>Contact</h2></div>
-      <p class="contact-lead"><em>Open to opportunities, collaborations,<br>and interesting conversations.</em></p>
-      <div class="contact-rows">
-        <a href="mailto:abheekchoudhury28@gmail.com" class="c-row">
-          <span class="c-type">Email</span>
-          <span class="c-val">abheekchoudhury28@gmail.com</span>
-          <span class="c-arr">↗</span>
+  <!-- ── CONTACT ───────────────────────────────────── -->
+  <section id="contact" class="view">
+    <div class="page contact-page">
+      <div class="page-title-row">
+        <h2 class="page-title">Contact</h2>
+      </div>
+      <p class="contact-lead">Open to opportunities, collaborations, and interesting conversations.</p>
+      <div class="contact-list">
+        <a class="contact-row" href="mailto:abheekchoudhury28@gmail.com">
+          <span class="ct-label">Email</span>
+          <span class="ct-val">abheekchoudhury28@gmail.com</span>
+          <span class="ct-arrow">&#8599;</span>
         </a>
-        <a href="https://linkedin.com/in/abheekchoudhury" target="_blank" class="c-row">
-          <span class="c-type">LinkedIn</span>
-          <span class="c-val">linkedin.com/in/abheekchoudhury</span>
-          <span class="c-arr">↗</span>
+        <a class="contact-row" href="https://linkedin.com/in/abheekchoudhury" target="_blank">
+          <span class="ct-label">LinkedIn</span>
+          <span class="ct-val">linkedin.com/in/abheekchoudhury</span>
+          <span class="ct-arrow">&#8599;</span>
         </a>
       </div>
     </div>
   </section>
 
-  <!-- MODAL -->
-  <div class="overlay" id="overlay" onclick="closeModal()">
+  <!-- ── MODAL ─────────────────────────────────────── -->
+  <div id="overlay" class="overlay" onclick="closeModal()">
     <div class="modal" onclick="event.stopPropagation()">
-      <button class="modal-x" onclick="closeModal()">✕</button>
-      <div id="modalBody"></div>
+      <button class="modal-close" onclick="closeModal()">&#10005;</button>
+      <div id="modal-content"></div>
     </div>
   </div>
 
