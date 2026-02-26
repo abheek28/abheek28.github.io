@@ -722,6 +722,84 @@
       font-size: 0.7rem;
     }
 
+    /* ── NAV RIGHT ── */
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-shrink: 0;
+    }
+
+    /* ── HAMBURGER (mobile only) ── */
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      justify-content: center;
+      gap: 5px;
+      width: 36px;
+      height: 36px;
+      padding: 6px;
+      background: none;
+      border: none;
+      cursor: pointer;
+    }
+    .hamburger span {
+      display: block;
+      width: 100%;
+      height: 1.5px;
+      background: var(--text);
+      border-radius: 2px;
+      transition: transform 0.3s, opacity 0.3s;
+    }
+    .hamburger.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; }
+    .hamburger.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+
+    /* ── MOBILE DRAWER ── */
+    .mobile-menu {
+      display: none;
+      flex-direction: column;
+      background: rgba(0,0,0,0.96);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-top: 1px solid var(--border);
+      padding: 8px 0 16px;
+      position: absolute;
+      top: var(--nav-h);
+      left: 0; right: 0;
+      z-index: 998;
+      transform: translateY(-8px);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.25s, transform 0.25s;
+    }
+    [data-theme="light"] .mobile-menu {
+      background: rgba(255,255,255,0.97);
+    }
+    .mobile-menu.open {
+      opacity: 1;
+      transform: translateY(0);
+      pointer-events: all;
+    }
+    .mob-link {
+      font-size: 0.95rem;
+      font-weight: 300;
+      color: var(--muted);
+      padding: 14px 24px;
+      text-align: left;
+      width: 100%;
+      border-bottom: 1px solid var(--border);
+      transition: color 0.15s, background 0.15s;
+    }
+    .mob-link:last-child { border-bottom: none; }
+    .mob-link:hover { color: var(--text); background: var(--surface); }
+
+    @media (max-width: 680px) {
+      .nav-links { display: none !important; }
+      .hamburger { display: flex !important; }
+      .mobile-menu { display: flex; }
+    }
+
     /* ── SCROLLBAR ── */
     ::-webkit-scrollbar { width: 4px; }
     ::-webkit-scrollbar-thumb { background: var(--border-h); border-radius: 10px; }
@@ -799,7 +877,9 @@
   <nav class="nav">
     <div class="nav-bar">
       <span class="nav-logo" onclick="go('hero')">AC</span>
-      <div class="nav-links">
+
+      <!-- Desktop links -->
+      <div class="nav-links" id="navLinks">
         <button class="nav-link" onclick="go('projects')">Projects</button>
         <button class="nav-link" onclick="go('internships')">Internships</button>
         <button class="nav-link" onclick="go('achievements')">Achievements</button>
@@ -807,10 +887,27 @@
         <button class="nav-link" onclick="go('skills')">Skills</button>
         <button class="nav-link" onclick="go('contact')">Contact</button>
       </div>
-      <div class="theme-wrap">
-        <button class="theme-btn" id="themeBtn" onclick="toggleTheme()" aria-label="Toggle theme">☽</button>
-        <div class="theme-tooltip" id="themeTip">Switch to light mode</div>
+
+      <div class="nav-right">
+        <div class="theme-wrap">
+          <button class="theme-btn" id="themeBtn" onclick="toggleTheme()" aria-label="Toggle theme">☽</button>
+          <div class="theme-tooltip" id="themeTip">Switch to light mode</div>
+        </div>
+        <!-- Hamburger (mobile only) -->
+        <button class="hamburger" id="hamburger" onclick="toggleMenu()" aria-label="Menu">
+          <span></span><span></span><span></span>
+        </button>
       </div>
+    </div>
+
+    <!-- Mobile drawer -->
+    <div class="mobile-menu" id="mobileMenu">
+      <button class="mob-link" onclick="mobileGo('projects')">Projects</button>
+      <button class="mob-link" onclick="mobileGo('internships')">Internships</button>
+      <button class="mob-link" onclick="mobileGo('achievements')">Achievements</button>
+      <button class="mob-link" onclick="mobileGo('interests')">Interests</button>
+      <button class="mob-link" onclick="mobileGo('skills')">Skills</button>
+      <button class="mob-link" onclick="mobileGo('contact')">Contact</button>
     </div>
   </nav>
 
@@ -1262,6 +1359,39 @@
       document.getElementById('overlay').classList.remove('open');
       document.body.style.overflow = '';
     }
+
+
+    /* ── Hamburger menu ── */
+    function toggleMenu() {
+      const btn = document.getElementById('hamburger');
+      const menu = document.getElementById('mobileMenu');
+      btn.classList.toggle('open');
+      menu.classList.toggle('open');
+    }
+
+    function mobileGo(id) {
+      // Close menu first
+      document.getElementById('hamburger').classList.remove('open');
+      document.getElementById('mobileMenu').classList.remove('open');
+      // Scroll to section
+      setTimeout(() => {
+        const el = document.getElementById(id);
+        if (el) {
+          const top = el.getBoundingClientRect().top + window.scrollY - 52;
+          window.scrollTo({ top, behavior: 'smooth' });
+        }
+      }, 150);
+    }
+
+    // Close menu on outside click
+    document.addEventListener('click', function(e) {
+      const menu = document.getElementById('mobileMenu');
+      const btn = document.getElementById('hamburger');
+      if (menu.classList.contains('open') && !menu.contains(e.target) && !btn.contains(e.target)) {
+        btn.classList.remove('open');
+        menu.classList.remove('open');
+      }
+    });
 
     /* ── Hero scroll: snap between panels ── */
     function heroScrollTo(panel) {
