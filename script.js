@@ -1,105 +1,101 @@
-/* ── Theme ─────────────────────────────────────── */
-const html    = document.documentElement;
-const themeBtn = document.getElementById('themeBtn');
-
-const saved = localStorage.getItem('theme');
-if (saved) html.setAttribute('data-theme', saved);
-
-themeBtn.addEventListener('click', () => {
-  const next = html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
-  html.setAttribute('data-theme', next);
-  localStorage.setItem('theme', next);
-});
-
-/* ── Ribbon glass effect on scroll ─────────────── */
-const ribbon = document.querySelector('.ribbon');
-window.addEventListener('scroll', () => {
-  ribbon.classList.toggle('up', window.scrollY > 8);
-}, { passive: true });
-
-/* ── Section navigation ─────────────────────────── */
+/* ─── State ─────────────────────────────────── */
 let current = 'hero';
 
-function showSection(id) {
-  if (id === current) return;
-
-  // hide current
-  const prev = document.getElementById(current);
-  if (current === 'hero') {
-    prev.style.opacity = '0';
-    prev.style.transition = 'opacity .35s';
-    setTimeout(() => { prev.style.display = 'none'; }, 350);
-  } else {
-    prev.classList.add('hidden');
-  }
-
-  // update nav active
-  document.querySelectorAll('.nav-link').forEach((b, i) => {
-    const map = ['projects','internships','achievements','interests','contact'];
-    b.classList.toggle('active', map[i] === id);
+/* ─── On load: show hero ────────────────────── */
+window.addEventListener('DOMContentLoaded', () => {
+  const hero = document.getElementById('hero');
+  hero.style.display = 'flex';
+  requestAnimationFrame(() => {
+    requestAnimationFrame(() => hero.classList.add('visible'));
   });
 
-  // show next
-  current = id;
-  const next = document.getElementById(id);
-
-  if (id === 'hero') {
-    next.style.display = '';
-    next.style.opacity = '0';
-    requestAnimationFrame(() => {
-      next.style.transition = 'opacity .4s';
-      next.style.opacity = '1';
-    });
-  } else {
-    next.classList.remove('hidden');
-    next.style.opacity = '0';
-    next.style.transform = 'translateY(18px)';
-    next.style.transition = 'none';
-    requestAnimationFrame(() => {
-      requestAnimationFrame(() => {
-        next.style.transition = 'opacity .45s cubic-bezier(0.22,1,0.36,1), transform .45s cubic-bezier(0.22,1,0.36,1)';
-        next.style.opacity = '1';
-        next.style.transform = 'translateY(0)';
-      });
-    });
-  }
-
-  window.scrollTo({ top: 0, behavior: 'instant' });
-}
-
-// click logo → hero
-document.querySelector('.ribbon-inner').addEventListener('click', e => {
-  if (e.target === e.currentTarget) showSection('hero');
+  // Restore theme
+  const saved = localStorage.getItem('theme') || 'dark';
+  setTheme(saved);
 });
 
-/* ── Modal content ──────────────────────────────── */
-const modals = {
-  proj1: `
+/* ─── Show section ──────────────────────────── */
+function show(id) {
+  if (id === current) return;
+
+  // Hide current
+  const prev = document.getElementById(current);
+  prev.classList.remove('visible');
+  setTimeout(() => {
+    prev.style.display = 'none';
+    prev.classList.remove('active');
+  }, 350);
+
+  // Show next
+  current = id;
+  const next = document.getElementById(id);
+  next.style.display = 'flex';
+  next.classList.add('active');
+  requestAnimationFrame(() => {
+    requestAnimationFrame(() => next.classList.add('visible'));
+  });
+
+  // Scroll the new section to top
+  next.scrollTop = 0;
+
+  // Update nav active state
+  document.querySelectorAll('.nav-item').forEach(btn => btn.classList.remove('active'));
+  const targets = {
+    projects: 1, internships: 2, achievements: 3, interests: 4, contact: 5
+  };
+  const idx = targets[id];
+  if (idx !== undefined) {
+    document.querySelectorAll('.nav-item')[idx]?.classList.add('active');
+  }
+}
+
+/* ─── Go home ───────────────────────────────── */
+function goHome() {
+  // Clear all active nav states
+  document.querySelectorAll('.nav-item').forEach(btn => btn.classList.remove('active'));
+  show('hero');
+}
+
+/* ─── Theme ─────────────────────────────────── */
+function setTheme(t) {
+  document.documentElement.setAttribute('data-theme', t);
+  document.getElementById('themeBtn').textContent = t === 'dark' ? '☽' : '☀';
+  localStorage.setItem('theme', t);
+}
+
+function toggleTheme() {
+  const current = document.documentElement.getAttribute('data-theme');
+  setTheme(current === 'dark' ? 'light' : 'dark');
+}
+
+/* ─── Modal data ────────────────────────────── */
+const MODALS = {
+  p1: `
     <h2>Plagiarism Detection System</h2>
     <hr class="m-hr">
-    <p>Designed and implemented a modular document similarity engine using structured object-oriented architecture. Engineered to handle large document sets with performance-conscious comparison logic.</p>
+    <p>Designed and implemented a modular document similarity engine using structured object-oriented architecture, built to handle large document sets with performance-conscious comparison logic.</p>
     <p class="m-label">Core Components</p>
     <ul>
       <li>Substring segmentation algorithms</li>
       <li>Efficient pattern matching mechanisms</li>
       <li>Custom similarity scoring frameworks</li>
-      <li>Optimized text preprocessing pipelines</li>
+      <li>Optimised text preprocessing pipelines</li>
     </ul>
     <p class="m-label">Key Learnings</p>
     <ul>
-      <li>Algorithmic design and time complexity optimization</li>
+      <li>Algorithmic design and time complexity optimisation</li>
       <li>Data structuring for text processing</li>
       <li>Clean software architecture principles</li>
-      <li>Extensibility for future NLP enhancements</li>
+      <li>Scalability and extensibility for future NLP enhancements</li>
     </ul>
   `,
-  proj2: `
+  p2: `
     <h2>Supernova Cosmology Analysis</h2>
     <hr class="m-hr">
-    <p>Conducted computational analysis on real astronomical datasets to study universal expansion using Type Ia supernova data. Applied numerical computing to interpret cosmological constants and evaluate expansion trends.</p>
+    <p>Conducted computational analysis on real astronomical datasets to study universal expansion using Type Ia supernova data. Applied numerical computing methods to interpret cosmological constants.</p>
     <p class="m-label">Implemented</p>
     <ul>
-      <li>Redshift–distance modelling</li>
+      <li>Redshift-distance modelling</li>
       <li>Regression techniques for parameter estimation</li>
       <li>Residual analysis for model validation</li>
       <li>Scientific visualisation pipelines in Python</li>
@@ -107,15 +103,14 @@ const modals = {
     <p class="m-label">Skills Developed</p>
     <ul>
       <li>Statistical modelling and scientific computing</li>
-      <li>Data-driven interpretation of physical phenomena</li>
-      <li>Research-oriented analytical thinking</li>
+      <li>Data interpretation and research-oriented analysis</li>
     </ul>
   `,
-  intern1: `
-    <h2>Astronomy &amp; Astrophysics Intern</h2>
+  i1: `
+    <h2>Astronomy and Astrophysics Intern</h2>
     <p class="m-org">India Space Academy</p>
     <hr class="m-hr">
-    <p>Worked with Type Ia supernova datasets to estimate cosmological parameters and study the expansion of the universe.</p>
+    <p>Worked with Type Ia supernova datasets to estimate cosmological parameters and study the expansion of the universe through data-driven computational methods.</p>
     <p class="m-label">Responsibilities</p>
     <ul>
       <li>Data cleaning and preprocessing</li>
@@ -126,15 +121,15 @@ const modals = {
     <p class="m-label">Exposure Gained</p>
     <ul>
       <li>Scientific computing workflows</li>
-      <li>Research documentation</li>
+      <li>Research documentation practices</li>
       <li>Applied numerical modelling</li>
     </ul>
   `,
-  intern2: `
+  i2: `
     <h2>Winter Technical Intern</h2>
     <p class="m-org">India Space Lab</p>
     <hr class="m-hr">
-    <p>Participated in structured technical training and guided project development in space technology systems. Focused on translating engineering principles into structured real-world solutions.</p>
+    <p>Participated in structured technical training and guided project development in space technology systems. Focused on translating engineering principles into real-world solutions.</p>
     <p class="m-label">Worked On</p>
     <ul>
       <li>Applied engineering problem solving</li>
@@ -143,11 +138,11 @@ const modals = {
       <li>Practical implementation of theoretical concepts</li>
     </ul>
   `,
-  achieve1: `
+  a1: `
     <h2>Technical Leadership</h2>
     <p class="m-org">IEEE PELS Chapter</p>
     <hr class="m-hr">
-    <p>Progressed from volunteer to leadership roles within the technical community, developing strong organisational, technical mentoring, and structured execution skills.</p>
+    <p>Progressed from volunteer to leadership roles, developing strong organisational, technical mentoring, and structured execution skills within the engineering community.</p>
     <p class="m-label">Led</p>
     <ul>
       <li>Technical project initiatives</li>
@@ -159,9 +154,9 @@ const modals = {
 };
 
 function openModal(id) {
-  const body = modals[id];
-  if (!body) return;
-  document.getElementById('modalBody').innerHTML = body;
+  const content = MODALS[id];
+  if (!content) return;
+  document.getElementById('modal-content').innerHTML = content;
   document.getElementById('overlay').classList.add('open');
   document.body.style.overflow = 'hidden';
 }
