@@ -225,17 +225,9 @@
     .cf-btn { font-family: inherit; font-size: 0.8rem; font-weight: 400; color: #fff; background: var(--accent); border: none; border-radius: 100px; padding: 11px 26px; cursor: pointer; transition: opacity 0.2s, transform 0.2s; white-space: nowrap; }
     .cf-btn:hover { opacity: 0.85; transform: translateY(-1px); }
     .cf-btn:disabled { opacity: 0.45; cursor: not-allowed; transform: none; }
-    .cf-btn-sm { padding: 10px 20px; font-size: 0.78rem; }
     .cf-note { font-size: 0.75rem; font-weight: 300; color: var(--muted); }
     .cf-note.err { color: #ff453a; }
     .cf-note.ok { color: #30d158; }
-    .cf-verify-msg { font-size: 0.88rem; font-weight: 300; color: var(--muted); margin-bottom: 20px; }
-    .cf-verify-msg strong { color: var(--text); font-weight: 400; }
-    .cf-otp-row { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; }
-    .cf-otp { width: 160px; letter-spacing: 0.22em; font-size: 1.1rem; text-align: center; }
-    .cf-otp-actions { margin-top: 14px; display: flex; gap: 20px; }
-    .cf-link-btn { font-family: inherit; font-size: 0.75rem; font-weight: 300; color: var(--muted); background: none; border: none; cursor: pointer; transition: color 0.2s; padding: 0; }
-    .cf-link-btn:hover { color: var(--accent); }
     .cf-success { display: flex; align-items: center; gap: 16px; padding: 28px 0; }
     .cf-success-icon { width: 40px; height: 40px; background: rgba(48,209,88,0.12); color: #30d158; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.1rem; flex-shrink: 0; }
     .cf-success p { font-size: 0.95rem; font-weight: 300; color: var(--muted); }
@@ -499,21 +491,9 @@
           </div>
           <div class="cf-field" style="margin-top:14px;"><label class="cf-label">Message</label><textarea class="cf-input cf-textarea" id="cfMsg" placeholder="What's on your mind?"></textarea></div>
           <div class="cf-actions">
-            <button class="cf-btn" id="cfSendBtn" onclick="cfSendOtp()">Send OTP to verify ↗</button>
+            <button class="cf-btn" id="cfSendBtn" onclick="cfSendMessage()">Send Message ↗</button>
             <span class="cf-note" id="cfNote"></span>
           </div>
-        </div>
-        <div id="cfStep2" style="display:none;">
-          <p class="cf-verify-msg">We sent a 6-digit code to <strong id="cfEmailShow"></strong></p>
-          <div class="cf-otp-row">
-            <input class="cf-input cf-otp" type="text" id="cfOtpInput" maxlength="6" placeholder="••••••"/>
-            <button class="cf-btn cf-btn-sm" onclick="cfVerifyOtp()">Verify &amp; Send</button>
-          </div>
-          <div class="cf-otp-actions">
-            <button class="cf-link-btn" onclick="cfResend()">Resend code</button>
-            <button class="cf-link-btn" onclick="cfBack()">← Back</button>
-          </div>
-          <span class="cf-note" id="cfNote2"></span>
         </div>
         <div id="cfStep3" style="display:none;">
           <div class="cf-success">
@@ -617,54 +597,34 @@
     }, { threshold: 0.3 });
     obs.observe(document.getElementById('panel2'));
 
-    /* ── Contact Form + OTP ── */
-    let _otp = null, _otpExpiry = null;
-    function cfNote(id, msg, type='') { const el = document.getElementById(id); el.textContent = msg; el.className = 'cf-note ' + type; }
+    /* ── Contact Form - Direct Submit ── */
+    function cfNote(id, msg, type='') { 
+      const el = document.getElementById(id); 
+      el.textContent = msg; 
+      el.className = 'cf-note ' + type; 
+    }
 
-    function cfSendOtp() {
+    function cfSendMessage() {
       const name  = document.getElementById('cfName').value.trim();
       const email = document.getElementById('cfEmail').value.trim();
       const msg   = document.getElementById('cfMsg').value.trim();
+      
       if (!name)  return cfNote('cfNote', 'Please enter your name.', 'err');
       if (!email || !/^[^@]+@[^@]+\.[^@]+$/.test(email)) return cfNote('cfNote', 'Please enter a valid email.', 'err');
       if (!msg)   return cfNote('cfNote', 'Please write a message.', 'err');
-      _otp = String(Math.floor(100000 + Math.random() * 900000));
-      _otpExpiry = Date.now() + 5 * 60 * 1000;
+      
       document.getElementById('cfSendBtn').disabled = true;
-      cfNote('cfNote', 'Generating OTP...', '');
+      cfNote('cfNote', 'Preparing message...', '');
+      
       setTimeout(() => {
+        const subject = encodeURIComponent('Portfolio contact from ' + name);
+        const body    = encodeURIComponent('From: ' + name + ' <' + email + '>\n\n' + msg);
+        window.open('mailto:abheekchoudhury28@gmail.com?subject=' + subject + '&body=' + body);
+        
         document.getElementById('cfStep1').style.display = 'none';
-        document.getElementById('cfStep2').style.display = 'block';
-        document.getElementById('cfEmailShow').textContent = email;
-        cfNote('cfNote2', 'Your OTP (demo — no backend): ' + _otp, 'ok');
+        document.getElementById('cfStep3').style.display = 'block';
         document.getElementById('cfSendBtn').disabled = false;
-      }, 700);
-    }
-
-    function cfVerifyOtp() {
-      const entered = document.getElementById('cfOtpInput').value.trim();
-      if (!entered) return cfNote('cfNote2', 'Enter the 6-digit code.', 'err');
-      if (Date.now() > _otpExpiry) return cfNote('cfNote2', 'OTP expired. Please resend.', 'err');
-      if (entered !== _otp) return cfNote('cfNote2', 'Incorrect code. Try again.', 'err');
-      const name  = document.getElementById('cfName').value.trim();
-      const email = document.getElementById('cfEmail').value.trim();
-      const msg   = document.getElementById('cfMsg').value.trim();
-      const subject = encodeURIComponent('Portfolio contact from ' + name);
-      const body    = encodeURIComponent('From: ' + name + ' <' + email + '>\n\n' + msg);
-      window.open('mailto:abheekchoudhury28@gmail.com?subject=' + subject + '&body=' + body);
-      document.getElementById('cfStep2').style.display = 'none';
-      document.getElementById('cfStep3').style.display = 'block';
-    }
-
-    function cfResend() {
-      _otp = String(Math.floor(100000 + Math.random() * 900000));
-      _otpExpiry = Date.now() + 5 * 60 * 1000;
-      cfNote('cfNote2', 'New OTP (demo): ' + _otp, 'ok');
-    }
-    function cfBack() {
-      document.getElementById('cfStep2').style.display = 'none';
-      document.getElementById('cfStep1').style.display = 'block';
-      cfNote('cfNote', '', '');
+      }, 500);
     }
 
     /* ── Modal data ── */
