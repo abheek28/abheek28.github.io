@@ -17,9 +17,8 @@
   --text:#f5f5f7;
   --muted:rgba(245,245,247,0.55);
   --dim:rgba(245,245,247,0.26);
-  --accent:#f5c518; /* changed accent to golden */
+  --accent:#2997ff;
   --nav-h:52px;
-  --ease:cubic-bezier(0.25,0.46,0.45,0.94);
 }
 
 [data-theme="light"] {
@@ -31,7 +30,7 @@
   --text:#1d1d1f;
   --muted:rgba(29,29,31,0.56);
   --dim:rgba(29,29,31,0.3);
-  --accent:#d4a017;
+  --accent:#0066cc;
 }
 
 *{box-sizing:border-box;margin:0;padding:0;}
@@ -40,7 +39,6 @@ body{
   background:var(--bg);
   color:var(--text);
   -webkit-font-smoothing:antialiased;
-  transition:background .4s,color .4s;
 }
 
 button{font-family:inherit;cursor:pointer;border:none;background:none;}
@@ -95,10 +93,9 @@ a{text-decoration:none;color:inherit;}
 }
 .cf-btn{
   background:var(--accent);
-  color:#000;
+  color:#fff;
   padding:12px 28px;
   border-radius:100px;
-  font-weight:500;
 }
 .cf-note{font-size:.85rem;margin-left:10px;}
 .cf-note.err{color:#ff453a;}
@@ -124,32 +121,27 @@ canvas{
   </div>
 </nav>
 
-<!-- HERO -->
 <section id="hero" class="view">
 <canvas id="particleCanvas"></canvas>
 <div class="hero-body">
   <p class="eyebrow">Computer Science Undergraduate</p>
   <h1 class="hero-name">Abheek Choudhury</h1>
   <p class="hero-desc">
-    Engineering structured software systems and computational frameworks 
-    that bridge theory with real-world execution.
+    Building structured software systems, scientific computing pipelines, and hardware-integrated engineering solutions.
   </p>
   <p class="hero-sub">
-    I focus on scalable architecture, mathematical modelling, and hardware-integrated solutions — 
-    transforming complex concepts into precise, production-ready systems.
+    Focused on scalable architecture, mathematical modelling, and translating complex theory into production-ready implementations.
   </p>
 </div>
 </section>
 
-<!-- PROJECTS -->
 <section id="projects" class="view">
 <div class="page">
 <h2 class="page-title">Projects</h2>
-<p style="color:var(--muted)">Project section unchanged for brevity — your cards remain same.</p>
+<p style="color:var(--muted)">Your original project cards remain unchanged here.</p>
 </div>
 </section>
 
-<!-- CONTACT -->
 <section id="contact" class="view">
 <div class="page" style="max-width:600px;">
 <h2 class="page-title">Contact</h2>
@@ -184,7 +176,7 @@ function sendMessage(){
   note.className="cf-note ok";
 }
 
-/* Yellow Particle Background */
+/* ORIGINAL BLUE PARTICLES */
 function initParticles(){
   const canvas=document.getElementById('particleCanvas');
   const ctx=canvas.getContext('2d');
@@ -197,14 +189,14 @@ function initParticles(){
   resize();
   window.addEventListener('resize',resize);
 
-  for(let i=0;i<140;i++){
+  for(let i=0;i<160;i++){
     particles.push({
       x:Math.random()*W,
       y:Math.random()*H,
-      r:Math.random()*3+1,
+      r:Math.random()*2.8+0.8,
       dx:(Math.random()-0.5)*0.4,
       dy:(Math.random()-0.5)*0.4,
-      o:Math.random()*0.6+0.3
+      o:Math.random()*0.75+0.35
     });
   }
 
@@ -217,7 +209,7 @@ function initParticles(){
       if(p.y<0||p.y>H)p.dy*=-1;
       ctx.beginPath();
       ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
-      ctx.fillStyle="rgba(255,215,0,"+p.o+")";
+      ctx.fillStyle="rgba(41,151,255,"+p.o+")";
       ctx.fill();
     });
     requestAnimationFrame(draw);
