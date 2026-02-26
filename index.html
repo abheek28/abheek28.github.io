@@ -5,146 +5,97 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Abheek Choudhury</title>
 
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <script defer src="script.js"></script>
 </head>
-
 <body>
 
-<header class="navbar">
-  <div class="nav-inner">
-    <div class="logo">Abheek</div>
-    <nav>
-      <a href="#projects">Projects</a>
-      <a href="#internships">Internships</a>
-      <a href="#interests">Interests</a>
-    </nav>
-    <button id="themeToggle">🌙</button>
-  </div>
+<header class="topbar">
+  <nav>
+    <span class="nav-item" data-section="projects">Projects</span>
+    <span class="nav-item" data-section="internships">Internships</span>
+    <span class="nav-item" data-section="achievements">Achievements</span>
+    <span class="nav-item" data-section="interests">Interests</span>
+  </nav>
 </header>
 
-<section class="hero">
-  <div class="hero-inner">
-    <h1>Abheek Choudhury</h1>
-    <p>Computer Science Undergraduate building software, research systems, and hardware-integrated solutions.</p>
-  </div>
+<section class="landing">
+  <h1>Abheek Choudhury</h1>
+  <p>Computer Science Undergraduate building structured software, research systems, and hardware-integrated solutions.</p>
 </section>
 
-<main class="main-container">
+<main>
 
   <!-- PROJECTS -->
-  <section id="projects" class="section">
-    <h2 class="section-title">Projects</h2>
-
-    <div class="accordion">
-
-      <div class="accordion-item">
-        <button class="accordion-header">Plagiarism Detection System</button>
-        <div class="accordion-body">
-          <p>
-          Developed a structured string-matching engine to detect document similarity.
-          Implemented substring segmentation, pattern matching, and scoring mechanisms.
-          Designed scalable OOP architecture to handle modular document processing.
-          Optimized comparison performance for large datasets.
-          </p>
-        </div>
+  <section id="projects" class="content-section">
+    <div class="item">
+      <h3 class="clickable">Plagiarism Detection System</h3>
+      <div class="description">
+        Developed a modular string-matching engine capable of detecting document similarity using structured OOP design.
+        Implemented substring segmentation, pattern matching logic, and similarity scoring mechanisms.
+        Optimized performance for large-scale document comparison.
       </div>
+    </div>
 
-      <div class="accordion-item">
-        <button class="accordion-header">Supernova Cosmology Analysis</button>
-        <div class="accordion-body">
-          <p>
-          Conducted numerical analysis on astronomical datasets using Python.
-          Modeled redshift–distance relationships to study cosmological expansion.
-          Applied regression techniques and residual analysis to validate predictions.
-          Built visualization pipelines to interpret scientific data.
-          </p>
-        </div>
+    <div class="item">
+      <h3 class="clickable">Supernova Cosmology Analysis</h3>
+      <div class="description">
+        Conducted numerical computing using Python to analyze astronomical datasets.
+        Modeled redshift–distance relationships and performed regression analysis.
+        Built visualization pipelines to interpret scientific observations.
       </div>
-
-      <div class="accordion-item">
-        <button class="accordion-header">Reaction Time Tester (Hardware)</button>
-        <div class="accordion-body">
-          <p>
-          Designed a hardware-based timing system using NE555 timers and CD4026 counters.
-          Integrated 7-segment displays with Start, Stop, and Reset logic.
-          Ensured accurate timing control through sequential circuit design.
-          </p>
-        </div>
-      </div>
-
     </div>
   </section>
-
 
   <!-- INTERNSHIPS -->
-  <section id="internships" class="section">
-    <h2 class="section-title">Internships</h2>
-
-    <div class="accordion">
-
-      <div class="accordion-item">
-        <button class="accordion-header">Astronomy & Astrophysics Intern – India Space Academy</button>
-        <div class="accordion-body">
-          <p>
-          Worked with real Type Ia supernova datasets to estimate cosmological parameters.
-          Applied Python-based numerical computing for curve fitting and model evaluation.
-          Interpreted astronomical observations through data visualization workflows.
-          Developed structured research documentation and analytical summaries.
-          </p>
-        </div>
+  <section id="internships" class="content-section">
+    <div class="item">
+      <h3 class="clickable">Astronomy & Astrophysics Intern – India Space Academy</h3>
+      <div class="description">
+        Worked on real Type Ia supernova datasets to estimate cosmological parameters.
+        Applied Python-based modeling and scientific computing techniques.
       </div>
+    </div>
 
-      <div class="accordion-item">
-        <button class="accordion-header">Winter Technical Intern – India Space Lab</button>
-        <div class="accordion-body">
-          <p>
-          Participating in structured technical training programs focused on applied engineering.
-          Engaged in guided project development and technical documentation practices.
-          Strengthened system-level thinking and structured problem-solving approaches.
-          </p>
-        </div>
+    <div class="item">
+      <h3 class="clickable">Winter Technical Intern – India Space Lab</h3>
+      <div class="description">
+        Participating in structured technical training and project-based learning programs in space technology.
+        Strengthened applied engineering problem-solving and documentation skills.
       </div>
-
     </div>
   </section>
 
+  <!-- ACHIEVEMENTS -->
+  <section id="achievements" class="content-section">
+    <div class="item">
+      <h3 class="clickable">Technical Leadership – IEEE PELS</h3>
+      <div class="description">
+        Led project initiatives and organized technical sessions.
+        Guided research-driven student development programs.
+      </div>
+    </div>
+  </section>
 
   <!-- INTERESTS -->
-  <section id="interests" class="section">
-    <h2 class="section-title">Interests</h2>
-
-    <div class="accordion">
-
-      <div class="accordion-item">
-        <button class="accordion-header">Software Engineering</button>
-        <div class="accordion-body">
-          <p>
-          Focused on clean architecture, scalable design patterns, and modular system development.
-          Interested in backend systems, performance optimization, and structured coding practices.
-          </p>
-        </div>
+  <section id="interests" class="content-section">
+    <div class="item">
+      <h3 class="clickable">Software Engineering</h3>
+      <div class="description">
+        Focused on scalable architecture, clean modular code, and structured backend systems.
       </div>
+    </div>
 
-      <div class="accordion-item">
-        <button class="accordion-header">Scientific Computing</button>
-        <div class="accordion-body">
-          <p>
-          Exploring numerical methods, data modeling, and research-driven computational systems.
-          Passionate about applying mathematical reasoning to real-world engineering challenges.
-          </p>
-        </div>
+    <div class="item">
+      <h3 class="clickable">Scientific Computing</h3>
+      <div class="description">
+        Interested in applying mathematical modeling and computational methods to real-world systems.
       </div>
-
     </div>
   </section>
 
 </main>
-
-<footer>
-  <p>© 2026 Abheek Choudhury</p>
-</footer>
 
 </body>
 </html>
