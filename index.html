@@ -644,7 +644,66 @@
     /* ── Modal data ── */
     const MODALS = {
       p1: `<h2>Plagiarism Detection System</h2><hr class="m-hr"><p>A document comparison tool that identifies copied or highly similar content using string matching algorithms. Designed with modular OOP architecture to handle large document sets efficiently.</p><p class="m-lbl">Core Components</p><ul><li>Substring segmentation and document splitting logic</li><li>Pattern comparison to detect content similarities</li><li>Similarity report generation from matching segments</li><li>Optimised text preprocessing pipelines</li></ul><p class="m-lbl">Key Learnings</p><ul><li>Algorithmic design and time complexity optimisation</li><li>Data structuring for text processing</li><li>Clean, extensible software architecture</li></ul>`,
-      p2: `<h2>Supernova Cosmology Analysis</h2><hr class="m-hr"><p>Computational analysis of real astronomical datasets to estimate the Hubble constant and determine the age of the universe. Applied numerical computing to study redshift-distance relationships.</p><p class="m-lbl">Implemented</p><ul><li>Redshift-distance modelling and regression</li><li>Residual analysis for model validation</li><li>Scientific visualisation using Python libraries</li><li>Curve fitting to interpret observations</li></ul><p class="m-lbl">Skills Developed</p><ul><li>Statistical modelling and numerical computing</li><li>Research-oriented data interpretation</li></ul>`,
+      p2: `
+<h2>Supernova Cosmology — Estimating H₀ and the Age of the Universe</h2>
+<p class="m-org">Pantheon+SH0ES Dataset | ΛCDM Cosmology</p>
+<hr class="m-hr">
+
+<p>
+A research-oriented computational study using real Type Ia Supernova data 
+(Pantheon+SH0ES) to estimate the Hubble constant (H₀), 
+matter density parameter (Ωₘ), and the age of the Universe 
+under a flat ΛCDM cosmological model.
+</p>
+
+<p class="m-lbl">Scientific Objective</p>
+<ul>
+  <li>Construct the Hubble diagram (μ vs z) using observational data</li>
+  <li>Model luminosity distance under ΛCDM assumptions</li>
+  <li>Perform constrained non-linear least squares fitting</li>
+  <li>Estimate cosmological age via numerical integration</li>
+  <li>Validate model consistency through residual analysis</li>
+</ul>
+
+<p class="m-lbl">Mathematical Framework</p>
+<ul>
+  <li>E(z) = √(Ωₘ(1+z)³ + (1−Ωₘ))</li>
+  <li>d<sub>L</sub>(z) = (1+z) · (c/H₀) ∫ dz'/E(z')</li>
+  <li>μ(z) = 5 log₁₀(d<sub>L</sub>/Mpc) + 25</li>
+  <li>t₀ = ∫ dz / [(1+z)H(z)]</li>
+</ul>
+
+<p class="m-lbl">Computational Implementation</p>
+<ul>
+  <li>Data preprocessing and cleaning (pandas, NumPy)</li>
+  <li>Numerical integration using scipy.integrate.quad</li>
+  <li>Curve fitting via scipy.optimize.curve_fit with realistic bounds</li>
+  <li>Uncertainty propagation from covariance matrix</li>
+  <li>Log-scale Hubble diagram visualization</li>
+</ul>
+
+<p class="m-lbl">Key Results</p>
+<ul>
+  <li>H₀ ≈ 68.00 ± 0.24 km/s/Mpc</li>
+  <li>Ωₘ ≈ 0.250 ± 0.016</li>
+  <li>Estimated Age of Universe ≈ 14.58 Gyr</li>
+</ul>
+
+<p class="m-lbl">Validation & Analysis</p>
+<ul>
+  <li>Residuals randomly distributed around zero</li>
+  <li>No systematic bias across redshift ranges</li>
+  <li>Low-z vs High-z comparison showed consistent expansion rate</li>
+  <li>Results aligned with Planck18 within uncertainty bounds</li>
+</ul>
+
+<p class="m-lbl">Why This Matters</p>
+<ul>
+  <li>Demonstrates ability to translate theoretical cosmology into executable models</li>
+  <li>Applies numerical methods to real astrophysical datasets</li>
+  <li>Bridges physics, mathematics, and computational engineering</li>
+</ul>
+`,
       p3: `<h2>Reaction Time Tester</h2><hr class="m-hr"><p>A hardware system that measures human reaction time to millisecond precision. Built and tested on a breadboard with stable performance and accurate output.</p><p class="m-lbl">Components</p><ul><li>NE555 timers for pulse generation</li><li>CD4026 decade counters for digit control</li><li>Dual 7-segment LED displays for output</li><li>Start, Stop, and Reset control interface</li></ul><p class="m-lbl">Key Learnings</p><ul><li>Digital circuit design and breadboard construction</li><li>Timer and counter integration</li><li>Hardware testing and performance validation</li></ul>`,
       p4: `<h2>Level-Based Memory Testing Device</h2><hr class="m-hr"><p>An interactive electronic system that challenges users to memorise and reproduce LED patterns. Features progressive difficulty to test memory retention and response time.</p><p class="m-lbl">In Progress</p><ul><li>LED pattern display and sequencing logic</li><li>Progressive difficulty level design</li><li>Circuit timing and user interaction flow</li><li>Memory retention and response measurement</li></ul>`,
       i1: `<h2>Astronomy and Astrophysics Intern</h2>
