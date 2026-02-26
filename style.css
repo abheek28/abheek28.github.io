@@ -1,13 +1,15 @@
 :root {
+  --bg: #0b0f1a;
+  --text: #f1f5f9;
+  --accent: #6366f1;
+  --muted: #94a3b8;
+}
+
+body.light {
   --bg: #f8fafc;
   --text: #0f172a;
   --accent: #6366f1;
-}
-
-body.dark {
-  --bg: #0f172a;
-  --text: #e2e8f0;
-  --accent: #8b5cf6;
+  --muted: #475569;
 }
 
 body {
@@ -15,89 +17,95 @@ body {
   font-family: 'Inter', sans-serif;
   background: var(--bg);
   color: var(--text);
-  transition: all 0.4s ease;
+  scroll-behavior: smooth;
+  transition: 0.4s ease;
 }
 
+/* NAV */
 .navbar {
   position: fixed;
   width: 100%;
   top: 0;
+  padding: 20px 80px;
   display: flex;
   justify-content: space-between;
-  padding: 20px 60px;
-  backdrop-filter: blur(10px);
-  background: rgba(255,255,255,0.5);
+  backdrop-filter: blur(12px);
+  background: rgba(0,0,0,0.3);
 }
 
-body.dark .navbar {
-  background: rgba(15,23,42,0.6);
-}
-
-.nav-links span {
-  margin-left: 30px;
+.nav-links a, #theme-toggle {
+  margin-left: 35px;
+  text-decoration: none;
+  color: var(--text);
+  font-weight: 600;
+  transition: 0.3s ease;
   cursor: pointer;
-  font-weight: 500;
-  transition: all 0.3s ease;
 }
 
-.nav-links span:hover {
+.nav-links a:hover {
   color: var(--accent);
-  transform: scale(1.2);
+  transform: scale(1.15);
 }
 
+/* HERO */
 .hero {
   height: 100vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  padding-top: 80px;
   text-align: center;
 }
 
 .hero h1 {
-  font-size: 72px;
+  font-size: 92px;
   font-weight: 900;
+  margin: 0;
 }
 
 .hero p {
-  font-size: 22px;
-  max-width: 700px;
-  opacity: 0.8;
+  font-size: 24px;
+  margin-top: 20px;
+  color: var(--muted);
+  max-width: 800px;
 }
 
-.content-section {
-  padding: 120px 80px;
-  display: none;
+/* SECTIONS */
+.section {
+  padding: 160px 140px;
 }
 
-.content-section h2 {
-  font-size: 48px;
+.section h2 {
+  font-size: 56px;
+  margin-bottom: 60px;
+}
+
+.expand {
   margin-bottom: 40px;
 }
 
-.item {
-  margin-bottom: 25px;
-}
-
-.item-title {
-  font-size: 22px;
-  font-weight: 600;
+.title {
+  font-size: 26px;
+  font-weight: 700;
   cursor: pointer;
-  transition: 0.3s;
+  transition: 0.3s ease;
 }
 
-.item-title:hover {
+.title:hover {
   color: var(--accent);
+  transform: translateX(8px);
 }
 
-.item-content {
+.desc {
   max-height: 0;
   overflow: hidden;
-  transition: all 0.4s ease;
-  opacity: 0.7;
+  transition: 0.4s ease;
+  color: var(--muted);
+  font-size: 18px;
+  margin-top: 10px;
 }
 
-.item.active .item-content {
-  max-height: 300px;
-  margin-top: 10px;
+.expand.active .desc {
+  max-height: 400px;
 }
