@@ -1,24 +1,25 @@
-// DARK MODE TOGGLE
-const toggle = document.getElementById("themeToggle");
+// NAVIGATION CLICK
+const navItems = document.querySelectorAll(".nav-item");
+const sections = document.querySelectorAll(".content-section");
 
-toggle.addEventListener("click", () => {
-  document.body.classList.toggle("dark");
-  toggle.textContent = document.body.classList.contains("dark") ? "☀️" : "🌙";
+navItems.forEach(item => {
+  item.addEventListener("click", () => {
+    const target = item.dataset.section;
+
+    sections.forEach(section => {
+      section.style.display = section.id === target ? "block" : "none";
+    });
+
+    window.scrollTo({ top: window.innerHeight, behavior: "smooth" });
+  });
 });
 
-// ACCORDION ANIMATION
-const accordionHeaders = document.querySelectorAll(".accordion-header");
+// EXPAND DESCRIPTION
+const clickables = document.querySelectorAll(".clickable");
 
-accordionHeaders.forEach(header => {
-  header.addEventListener("click", () => {
-    const item = header.parentElement;
-
-    item.classList.toggle("active");
-
-    accordionHeaders.forEach(otherHeader => {
-      if (otherHeader !== header) {
-        otherHeader.parentElement.classList.remove("active");
-      }
-    });
+clickables.forEach(title => {
+  title.addEventListener("click", () => {
+    const desc = title.nextElementSibling;
+    desc.classList.toggle("active");
   });
 });
