@@ -184,22 +184,46 @@
       body { overflow: auto; }
     }
 
-    /* ── HERO ── */
+    /* ── HERO PANELS ── */
     #hero {
+      overflow-y: scroll;
+      scroll-snap-type: y mandatory;
+      -webkit-overflow-scrolling: touch;
+      display: block;
+    }
+    .hero-panel {
+      width: 100%;
+      height: calc(100vh - var(--nav-h));
+      min-height: calc(100vh - var(--nav-h));
+      scroll-snap-align: start;
+      position: relative;
+      display: flex;
       align-items: center;
       justify-content: center;
       text-align: center;
-      padding: 0 28px;
-      background: var(--bg);
       overflow: hidden;
-      min-height: calc(100vh - var(--nav-h));
     }
+
+    /* Panel 1 */
+    #panel1 { background: var(--bg); }
+
+    /* Particle canvas */
+    #particleCanvas, #particleCanvas2 {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 0;
+    }
+
     .glow {
       position: absolute;
       border-radius: 50%;
       filter: blur(130px);
       pointer-events: none;
       opacity: 0.2;
+      z-index: 0;
     }
     .glow-a {
       width: 680px; height: 680px;
@@ -217,7 +241,13 @@
       from { transform: translate(0,0); }
       to   { transform: translate(50px,35px); }
     }
-    .hero-body { position: relative; z-index: 1; max-width: 760px; }
+
+    .hero-body {
+      position: relative;
+      z-index: 1;
+      max-width: 760px;
+      padding: 0 28px;
+    }
 
     .eyebrow {
       font-size: 0.75rem;
@@ -266,6 +296,129 @@
         animation: none !important;
         transform: none !important;
       }
+    }
+
+    /* Scroll cue */
+    .scroll-cue {
+      position: absolute;
+      bottom: 32px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      z-index: 2;
+      opacity: 0;
+      animation: up 0.8s var(--ease) 1s forwards;
+    }
+    .scroll-cue-text {
+      font-size: 0.6rem;
+      font-weight: 300;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--dim);
+    }
+    .scroll-cue-line {
+      width: 1px;
+      height: 40px;
+      background: linear-gradient(to bottom, var(--accent), transparent);
+      animation: lineDown 1.8s ease-in-out infinite;
+    }
+    @keyframes lineDown {
+      0%   { transform: scaleY(0); transform-origin: top; opacity: 1; }
+      50%  { transform: scaleY(1); transform-origin: top; opacity: 1; }
+      51%  { transform: scaleY(1); transform-origin: bottom; }
+      100% { transform: scaleY(0); transform-origin: bottom; opacity: 0; }
+    }
+
+    /* ── CONTACT PANEL ── */
+    .contact-panel {
+      background: #000;
+    }
+    .cp-inner {
+      position: relative;
+      z-index: 2;
+      width: 100%;
+      max-width: 700px;
+      padding: 0 32px;
+    }
+    .cp-label {
+      font-size: 0.68rem;
+      font-weight: 300;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 52px;
+      opacity: 0;
+      transition: opacity 0.6s 0.1s, transform 0.6s 0.1s;
+      transform: translateY(16px);
+    }
+    .cp-links { display: flex; flex-direction: column; gap: 0; }
+    .cp-item {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      padding: 26px 0;
+      border-bottom: 1px solid var(--border);
+      text-decoration: none;
+      color: inherit;
+      opacity: 0;
+      transform: translateX(-30px);
+      transition: opacity 0.55s, transform 0.55s var(--ease), border-color 0.2s;
+    }
+    .cp-item:first-child { border-top: 1px solid var(--border); }
+    .cp-item:hover { border-color: var(--border-h); }
+    .cp-item:hover .cp-val { color: var(--text); }
+    .cp-item:hover .cp-arr { transform: translate(3px,-3px); }
+    .cp-type {
+      font-size: 0.62rem;
+      font-weight: 300;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--accent);
+      width: 80px;
+      flex-shrink: 0;
+    }
+    .cp-val {
+      font-size: 1.05rem;
+      font-weight: 300;
+      color: var(--muted);
+      flex: 1;
+      text-align: left;
+      transition: color 0.2s;
+    }
+    .cp-arr {
+      font-size: 1rem;
+      color: var(--dim);
+      transition: transform 0.2s;
+    }
+    .cp-back {
+      margin-top: 40px;
+      font-size: 0.68rem;
+      font-weight: 300;
+      letter-spacing: 0.14em;
+      color: var(--dim);
+      cursor: pointer;
+      display: inline-block;
+      transition: color 0.2s;
+      opacity: 0;
+      transition: opacity 0.6s 0.7s, color 0.2s;
+    }
+    .cp-back:hover { color: var(--accent); }
+
+    /* Panel 2 visible state — triggered by JS */
+    #panel2.in-view .cp-label  { opacity: 1; transform: translateY(0); }
+    #panel2.in-view .cp-item   { opacity: 1; transform: translateX(0); }
+    #panel2.in-view .cp-back   { opacity: 1; }
+    #panel2.in-view #cpi1 { transition-delay: 0.15s; }
+    #panel2.in-view #cpi2 { transition-delay: 0.28s; }
+    #panel2.in-view #cpi3 { transition-delay: 0.41s; }
+
+    @media (max-width: 680px) {
+      .cp-val { font-size: 0.85rem; }
+      .cp-inner { padding: 0 18px; }
+      .cp-item { padding: 20px 0; gap: 12px; }
     }
 
     /* ── PAGE SHELL ── */
@@ -630,17 +783,52 @@
 
   <!-- HERO -->
   <section id="hero" class="view active">
-    <div class="glow glow-a"></div>
-    <div class="glow glow-b"></div>
-    <div class="hero-body">
-      <p class="eyebrow">Computer Science Undergraduate</p>
-      <h1 class="hero-name">Abheek Choudhury</h1>
-      <p class="hero-desc">Building structured software systems, scientific computing pipelines, and hardware-integrated engineering solutions.</p>
-      <p class="hero-sub">Focused on scalable architecture, mathematical modelling, and translating complex theory into production-ready implementations.</p>
+    <!-- Panel 1: Name -->
+    <div class="hero-panel" id="panel1">
+      <div class="glow glow-a"></div>
+      <div class="glow glow-b"></div>
+      <canvas id="particleCanvas"></canvas>
+      <div class="hero-body">
+        <p class="eyebrow">Computer Science Undergraduate</p>
+        <h1 class="hero-name">Abheek Choudhury</h1>
+        <p class="hero-desc">Building structured software systems, scientific computing pipelines, and hardware-integrated engineering solutions.</p>
+        <p class="hero-sub">Focused on scalable architecture, mathematical modelling, and translating complex theory into production-ready implementations.</p>
+      </div>
+      <div class="scroll-cue" id="scrollCue">
+        <span class="scroll-cue-text">scroll</span>
+        <div class="scroll-cue-line"></div>
+      </div>
+    </div>
+
+    <!-- Panel 2: Contact -->
+    <div class="hero-panel contact-panel" id="panel2">
+      <canvas id="particleCanvas2"></canvas>
+      <div class="cp-inner">
+        <p class="cp-label">Get in touch</p>
+        <div class="cp-links">
+          <a href="mailto:abheekchoudhury28@gmail.com" class="cp-item" id="cpi1">
+            <span class="cp-type">Email</span>
+            <span class="cp-val">abheekchoudhury28@gmail.com</span>
+            <span class="cp-arr">&#8599;</span>
+          </a>
+          <a href="https://linkedin.com/in/abheekchoudhury" target="_blank" class="cp-item" id="cpi2">
+            <span class="cp-type">LinkedIn</span>
+            <span class="cp-val">linkedin.com/in/abheekchoudhury</span>
+            <span class="cp-arr">&#8599;</span>
+          </a>
+          <a href="tel:+918668250024" class="cp-item" id="cpi3">
+            <span class="cp-type">Phone</span>
+            <span class="cp-val">+91 86682 50024</span>
+            <span class="cp-arr">&#8599;</span>
+          </a>
+        </div>
+        <div class="cp-back" onclick="heroScrollTo(0)">&#8593; back to top</div>
+      </div>
     </div>
   </section>
 
   <!-- PROJECTS -->
+
   <section id="projects" class="view">
     <div class="page">
       <div class="page-head"><h2 class="page-title">Projects</h2></div>
@@ -721,7 +909,7 @@
         <div class="card card-solo" onclick="openModal('a1')">
           <p class="c-num">01</p>
           <h3 class="c-title">Projects Head — IEEE PELS Chapter</h3>
-          <p class="c-desc">Progressed from Volunteer to Core Member to Board Member to Projects Head at VIT Vellore's IEEE PELS chapter.</p>
+          <p class="c-desc">Progressed from Volunteer to Core Member to Projects Head at VIT Vellore's IEEE PELS chapter.</p>
           <div class="c-tags"><span>Leadership</span><span>IEEE</span><span>Mentoring</span></div>
           <span class="c-cta">View details →</span>
         </div>
@@ -1002,7 +1190,7 @@
       a1: `<h2>Projects Head — IEEE PELS Chapter</h2>
            <p class="m-org">VIT Vellore</p>
            <hr class="m-hr">
-           <p>Progressed through all levels of the chapter — from Volunteer to Core Member to Board Member to Projects Head — developing strong leadership and technical mentoring skills.</p>
+           <p>Progressed through the chapter — from Volunteer to Core Member to Projects Head (also serving as Board Member) — developing strong leadership and technical mentoring skills.</p>
            <p class="m-lbl">Responsibilities</p>
            <ul>
              <li>Leading project initiatives and research activities</li>
@@ -1032,6 +1220,104 @@
       document.getElementById('overlay').classList.remove('open');
       document.body.style.overflow = '';
     }
+
+    /* ── Hero scroll: snap between panels ── */
+    function heroScrollTo(panel) {
+      const hero = document.getElementById('hero');
+      const panelEl = document.getElementById(panel === 0 ? 'panel1' : 'panel2');
+      hero.scrollTo({ top: panelEl.offsetTop, behavior: 'smooth' });
+    }
+
+    /* ── Intersection observer: trigger contact panel animation ── */
+    const panel2 = document.getElementById('panel2');
+    const obs = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) panel2.classList.add('in-view');
+      });
+    }, { threshold: 0.3 });
+    obs.observe(panel2);
+
+    /* ── Particle canvas ── */
+    function initParticles(canvasId, count, color) {
+      const canvas = document.getElementById(canvasId);
+      if (!canvas) return;
+      const ctx = canvas.getContext('2d');
+      let W, H, particles = [];
+
+      function resize() {
+        W = canvas.width  = canvas.offsetWidth;
+        H = canvas.height = canvas.offsetHeight;
+      }
+      resize();
+      window.addEventListener('resize', resize);
+
+      for (let i = 0; i < count; i++) {
+        particles.push({
+          x: Math.random() * 1920,
+          y: Math.random() * 1080,
+          r: Math.random() * 1.4 + 0.3,
+          dx: (Math.random() - 0.5) * 0.35,
+          dy: (Math.random() - 0.5) * 0.35,
+          o: Math.random() * 0.5 + 0.15
+        });
+      }
+
+      let mouse = { x: -9999, y: -9999 };
+      canvas.parentElement.addEventListener('mousemove', e => {
+        const rect = canvas.getBoundingClientRect();
+        mouse.x = e.clientX - rect.left;
+        mouse.y = e.clientY - rect.top;
+      });
+
+      function draw() {
+        ctx.clearRect(0, 0, W, H);
+        particles.forEach(p => {
+          // Move
+          p.x += p.dx;
+          p.y += p.dy;
+          if (p.x < 0) p.x = W;
+          if (p.x > W) p.x = 0;
+          if (p.y < 0) p.y = H;
+          if (p.y > H) p.y = 0;
+
+          // Mouse repel
+          const dist = Math.hypot(p.x - mouse.x, p.y - mouse.y);
+          if (dist < 100) {
+            const angle = Math.atan2(p.y - mouse.y, p.x - mouse.x);
+            p.x += Math.cos(angle) * 0.8;
+            p.y += Math.sin(angle) * 0.8;
+          }
+
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+          ctx.fillStyle = color.replace('A', p.o.toFixed(2));
+          ctx.fill();
+        });
+
+        // Connect nearby particles
+        for (let i = 0; i < particles.length; i++) {
+          for (let j = i + 1; j < particles.length; j++) {
+            const dx = particles[i].x - particles[j].x;
+            const dy = particles[i].y - particles[j].y;
+            const d = Math.sqrt(dx*dx + dy*dy);
+            if (d < 90) {
+              ctx.beginPath();
+              ctx.moveTo(particles[i].x, particles[i].y);
+              ctx.lineTo(particles[j].x, particles[j].y);
+              ctx.strokeStyle = color.replace('A', (0.06 * (1 - d/90)).toFixed(3));
+              ctx.lineWidth = 0.5;
+              ctx.stroke();
+            }
+          }
+        }
+        requestAnimationFrame(draw);
+      }
+      draw();
+    }
+
+    // Init both canvases
+    initParticles('particleCanvas',  90, 'rgba(41,151,255,A)');
+    initParticles('particleCanvas2', 70, 'rgba(41,151,255,A)');
     document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
 
   </script>
