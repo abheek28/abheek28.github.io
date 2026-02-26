@@ -246,7 +246,7 @@
       position: relative;
       z-index: 1;
       max-width: 760px;
-      padding: 0 28px;
+      padding: 0 28px 110px;
     }
 
     .eyebrow {
@@ -313,16 +313,17 @@
       animation: up 0.8s var(--ease) 1s forwards;
     }
     .scroll-cue-text {
-      font-size: 0.6rem;
-      font-weight: 300;
+      font-size: 0.65rem;
+      font-weight: 400;
       letter-spacing: 0.22em;
       text-transform: uppercase;
-      color: var(--dim);
+      color: #f5c518;
+      text-shadow: 0 0 12px rgba(245,197,24,0.5);
     }
     .scroll-cue-line {
       width: 1px;
       height: 40px;
-      background: linear-gradient(to bottom, var(--accent), transparent);
+      background: linear-gradient(to bottom, #f5c518, transparent);
       animation: lineDown 1.8s ease-in-out infinite;
     }
     @keyframes lineDown {
