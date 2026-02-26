@@ -728,28 +728,67 @@
 
     /* ── MOBILE ── */
     @media (max-width: 680px) {
-      .nav-bar { padding: 0 14px; }
-      .nav-links { gap: 0; }
-      .nav-link { padding: 0 9px; font-size: 0.72rem; }
+      /* Nav */
+      .nav-bar { padding: 0 12px; }
+      .nav-links { gap: 0; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+      .nav-link { padding: 0 9px; font-size: 0.7rem; white-space: nowrap; }
+
+      /* Body scrolls normally */
+      html, body { height: auto; overflow: auto; }
+
+      /* All views stack vertically */
+      .view {
+        position: relative !important;
+        top: auto !important; left: auto !important;
+        right: auto !important; bottom: auto !important;
+        overflow-y: visible !important;
+        display: flex !important;
+        opacity: 1 !important;
+        min-height: auto !important;
+      }
+
+      /* Hero: disable snap scroll, stack panels */
+      #hero {
+        overflow-y: visible !important;
+        scroll-snap-type: none !important;
+        display: block !important;
+        padding-top: var(--nav-h);
+      }
+      .hero-panel {
+        height: auto !important;
+        min-height: 100svh;
+        scroll-snap-align: none !important;
+        padding: 48px 24px 80px;
+      }
+      .hero-body { padding: 0 0 80px; }
+      .hero-name { font-size: 2.6rem; }
+      .eyebrow, .hero-name, .hero-desc, .hero-sub {
+        opacity: 1 !important;
+        animation: none !important;
+        transform: none !important;
+      }
+      .scroll-cue { display: none; }
+      .glow { display: none; }
+      #particleCanvas, #particleCanvas2 { display: none; }
+
+      /* Contact panel on mobile */
+      .cp-inner { padding: 0; }
+      .cp-val { font-size: 0.88rem; }
+      .cp-item {
+        opacity: 1 !important;
+        transform: none !important;
+        transition: none !important;
+        padding: 18px 0;
+      }
+      .cp-label { opacity: 1 !important; transform: none !important; margin-bottom: 32px; }
+      .cp-back { opacity: 1 !important; }
+
+      /* Inner pages */
       .grid { grid-template-columns: 1fr; }
       .int-row { grid-template-columns: 1fr; gap: 8px; }
       .skills-grid { grid-template-columns: 1fr; }
       .page { padding: 36px 18px 70px; }
-      .modal { padding: 28px 20px; max-height: 88vh; }
-      .glow { display: none; }
-      .view {
-        position: relative !important;
-        top: auto !important;
-        overflow-y: visible !important;
-        display: flex !important;
-        opacity: 1 !important;
-      }
-      #hero {
-        min-height: 100svh;
-        padding-top: 20px;
-        padding-bottom: 60px;
-      }
-      .hero-name { font-size: 2.8rem; }
+      .modal { padding: 28px 20px; max-height: 90vh; }
     }
 
   </style>
@@ -1029,7 +1068,15 @@
     (function init() {
       const t = localStorage.getItem('theme') || 'dark';
       applyTheme(t);
-      if (!isMobile()) {
+      if (isMobile()) {
+        // On mobile everything is visible via CSS, just show all sections
+        document.querySelectorAll('.view').forEach(v => {
+          v.style.display = 'flex';
+          v.style.opacity = '1';
+        });
+        // Trigger contact panel animation immediately on mobile
+        document.getElementById('panel2').classList.add('in-view');
+      } else {
         const el = document.getElementById('hero');
         el.style.display = 'flex';
         requestAnimationFrame(() => requestAnimationFrame(() => el.classList.add('visible')));
@@ -1039,9 +1086,11 @@
     /* ── Navigate ── */
     function go(id) {
       if (isMobile()) {
-        // On mobile: scroll to section
         const el = document.getElementById(id);
-        if (el) el.scrollIntoView({ behavior: 'smooth' });
+        if (el) {
+          const top = el.getBoundingClientRect().top + window.scrollY - 52;
+          window.scrollTo({ top, behavior: 'smooth' });
+        }
         return;
       }
       if (id === cur) return;
